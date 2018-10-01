@@ -1,14 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class CameraFollow : MonoBehaviour {
     [SerializeField] Transform target;
     [SerializeField] float smoothing = 5f;
 
     Vector3 offset;
-	// Use this for initialization
-	void Start () {
+
+    void Awake()
+    {
+        Assert.IsNotNull(target);
+    }
+    // Use this for initialization
+    void Start () {
 
         offset = transform.position - target.position;
 
