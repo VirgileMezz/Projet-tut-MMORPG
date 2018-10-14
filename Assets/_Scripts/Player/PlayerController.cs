@@ -15,10 +15,13 @@ public class PlayerController : MonoBehaviour {
 
     private Vector3 playerFwd;
 
+    private Animator anim;
+
     void Start () {
 
         characterController = GetComponent<CharacterController>();
         cam = camera.transform;
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -34,6 +37,27 @@ public class PlayerController : MonoBehaviour {
         move = vertical * playerFwd + horizontal * cam.right;
         //move = vertical * camForward + horizontal * cam.right;
         characterController.SimpleMove(move * moveSpeed);
+
+        // Pour l'anim
+        if(move == Vector3.zero)
+        {
+            anim.SetBool("IsWalking", false);
+        }
+        else
+        {
+            anim.SetBool("IsWalking", true);
+        }
+
+        // pour l'anim des attacks
+
+        if (Input.GetMouseButtonDown(0)) // Je met les boutons de la souris pour le moment
+        {
+            anim.Play("DoubleAttack");
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            anim.Play("SpinAttack");
+        }
 
 
     }
