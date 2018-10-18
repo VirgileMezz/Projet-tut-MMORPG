@@ -23,8 +23,12 @@ public class EnemyMove : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        nav.SetDestination(player.position);
-
+        if (!GameManager.instance.GameOver)
+        {
+            nav.SetDestination(player.position);
+        }
+        else { nav.enabled = false;
+            anim.Play("Idle");
+        }
 	}
 }
