@@ -16,12 +16,14 @@ public class PlayerController : MonoBehaviour {
     private Vector3 playerFwd;
 
     private Animator anim;
+    private BoxCollider[] swordColliders;
 
     void Start () {
 
         characterController = GetComponent<CharacterController>();
         cam = camera.transform;
         anim = GetComponent<Animator>();
+        swordColliders = GetComponentsInChildren<BoxCollider>();
     }
 
     // Update is called once per frame
@@ -61,6 +63,24 @@ public class PlayerController : MonoBehaviour {
             {
                 anim.Play("SpinAttack");
             }
+
+        }
+    }
+
+    public void BeginAttack()
+    {
+        foreach( var weapon in swordColliders)
+        {
+            weapon.enabled = true;
+
+        }
+    }
+
+    public void EndAttack()
+    {
+        foreach (var weapon in swordColliders)
+        {
+            weapon.enabled = false;
 
         }
     }
