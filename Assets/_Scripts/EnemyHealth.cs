@@ -9,7 +9,7 @@ public class EnemyHealth : MonoBehaviour {
     [SerializeField] private float timeSinceLastHit = 0.5f;
     [SerializeField] private float dissapearSpeed = 2f;
 
-    private AudioSource audio;
+    //private AudioSource audio;
     private float timer = 0f;
     private Animator anim;
     private NavMeshAgent nav;
@@ -34,7 +34,7 @@ public class EnemyHealth : MonoBehaviour {
         capsuleCollider = GetComponent<CapsuleCollider>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-        audio = GetComponent<AudioSource>();
+        //audio = GetComponent<AudioSource>();
         isAlive = true;
         currentHealth = startingHealth;
 		
@@ -67,7 +67,7 @@ public class EnemyHealth : MonoBehaviour {
     {
         if(currentHealth > 0)
         {
-            audio.PlayOneShot(audio.clip);
+            //audio.PlayOneShot(audio.clip);
             anim.Play("Hurt");
             currentHealth -= 10;
         }

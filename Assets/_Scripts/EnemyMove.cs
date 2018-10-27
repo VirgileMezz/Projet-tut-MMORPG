@@ -7,16 +7,20 @@ using UnityEngine.AI;
 public class EnemyMove : MonoBehaviour {
 
     [SerializeField] Transform player;
+    //private Transform player;
     private NavMeshAgent nav;
     private Animator anim;
     private EnemyHealth enemyHealth;
     void Awake()
     {
+        //player = GameManager.instance.Player.transform;
+
         Assert.IsNotNull(player);
     }
 
 	// Use this for initialization
 	void Start () {
+        //player = GameManager.instance.Player.transform;
         enemyHealth = GetComponent<EnemyHealth>();
         anim = GetComponent<Animator>();
         nav = GetComponent<NavMeshAgent>();

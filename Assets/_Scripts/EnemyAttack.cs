@@ -6,9 +6,11 @@ public class EnemyAttack : MonoBehaviour {
 
     [SerializeField] private float range = 3f;
     [SerializeField] private float timeBetweenAttacks = 1f;
+    [SerializeField] private GameObject player;
+
 
     private Animator anim;
-    private GameObject player;
+    //private GameObject player;
     private bool playerInRange;
     private BoxCollider[] weaponColliders; // tableau pour les ennemies qui ont plusieurs armes
     private EnemyHealth enemyHealth;
@@ -17,7 +19,7 @@ public class EnemyAttack : MonoBehaviour {
 
         enemyHealth = GetComponent<EnemyHealth>();
         weaponColliders = GetComponentsInChildren<BoxCollider>();
-        player = GameManager.instance.Player;
+        //player = GameManager.instance.Player;
         anim = GetComponent<Animator>();
         StartCoroutine(attack());
     }
@@ -25,7 +27,7 @@ public class EnemyAttack : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (Vector3.Distance(transform.position, player.transform.position) < range  && enemyHealth.IsAlive() )
+        if (Vector3.Distance(transform.position, player.transform.position) < range && enemyHealth.IsAlive()) 
         {
             playerInRange = true;
         }else

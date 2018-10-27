@@ -30,6 +30,10 @@ public class GameManager : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+        if (player == null)
+        {
+            player = GameObject.FindWithTag("Player");
+        }
 
         DontDestroyOnLoad(gameObject);
     }

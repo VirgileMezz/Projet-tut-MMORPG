@@ -18,6 +18,10 @@ public class PlayerController : MonoBehaviour {
     private Animator anim;
     private BoxCollider[] swordColliders;
 
+    //private void Awake()
+    //{
+      //  DontDestroyOnLoad(gameObject);
+    //}
     void Start () {
 
         characterController = GetComponent<CharacterController>();
