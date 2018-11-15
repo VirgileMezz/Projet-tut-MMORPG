@@ -63,7 +63,7 @@ public class EnemyHealth : MonoBehaviour {
         }
     }
 
-    void takeHit()
+    public void takeHit()
     {
         if(currentHealth > 0)
         {

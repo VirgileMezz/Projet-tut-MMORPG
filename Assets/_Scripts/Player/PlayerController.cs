@@ -18,12 +18,18 @@ public class PlayerController : MonoBehaviour {
     private Animator anim;
     private BoxCollider[] swordColliders;
 
+    private SystemCiblage sc;
+
+    //private float timeStamp;
+    
     //private void Awake()
     //{
       //  DontDestroyOnLoad(gameObject);
     //}
+    
     void Start () {
 
+        sc = gameObject.GetComponent<SystemCiblage>();
         characterController = GetComponent<CharacterController>();
         cam = camera.transform;
         anim = GetComponent<Animator>();
@@ -34,6 +40,8 @@ public class PlayerController : MonoBehaviour {
     void Update () {
         camForward = Vector3.Scale(cam.forward, new Vector3(1, 0, 1)).normalized;
         playerFwd = Vector3.Scale(transform.forward, new Vector3(1, 0, 1)).normalized;
+
+        sc.getCible();
 
 
         float horizontal = Input.GetAxis("Horizontal");
@@ -61,7 +69,28 @@ public class PlayerController : MonoBehaviour {
 
             if (Input.GetMouseButtonDown(0)) // Je met les boutons de la souris pour le moment
             {
-                anim.Play("DoubleAttack");
+                if (sc.getCible() != null)
+                {
+                    RaycastHit hit;
+                    print(sc.getCible());
+                    GameObject cible = sc.getCible();
+                    EnemyHealth eHp = cible.GetComponent<EnemyHealth>();
+
+                    if (Physics.SphereCast(transform.position, characterController.height / 2, transform.forward, out hit, 5))
+                    {
+                        if(cible = hit.collider.gameObject)//&& timeStamp <= Time.time
+                        {
+                            //timeStamp = Time.time + cooldown;
+
+                            eHp.takeHit();
+                            anim.Play("DoubleAttack");
+                            
+
+                        }
+                   
+                    }   
+
+                }
             }
             if (Input.GetMouseButtonDown(1))
             {
@@ -89,5 +118,9 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-   
+    IEnumerator cooldown(float cd)
+    {
+        yield return  new WaitForSeconds(cd);
+    }
+
 }
