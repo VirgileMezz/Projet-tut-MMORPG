@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour {
 
     private SystemCiblage sc;
 
-    //private float timeStamp;
+    private float tmpsAvtProchaineAtq;
     
     //private void Awake()
     //{
@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour {
 
             // pour l'anim des attacks
 
-            if (Input.GetMouseButtonDown(0)) // Je met les boutons de la souris pour le moment
+            if (Input.GetKeyDown(KeyCode.Alpha1)) // Je met les boutons de la souris pour le moment
             {
                 if (sc.getCible() != null)
                 {
@@ -75,26 +75,46 @@ public class PlayerController : MonoBehaviour {
                     print(sc.getCible());
                     GameObject cible = sc.getCible();
                     EnemyHealth eHp = cible.GetComponent<EnemyHealth>();
+                    float cooldown = 2.0f;
 
-                    if (Physics.SphereCast(transform.position, characterController.height / 2, transform.forward, out hit, 5))
+                    //characterController.height / 2
+                    if (Physics.SphereCast(transform.position, 10f , transform.forward, out hit, 5))
                     {
-                        if(cible = hit.collider.gameObject)//&& timeStamp <= Time.time
+                        if(cible = hit.collider.gameObject)
                         {
-                            //timeStamp = Time.time + cooldown;
+                            if (tmpsAvtProchaineAtq <= Time.time)
+                            {
+                                tmpsAvtProchaineAtq = Time.time + cooldown;
 
-                            eHp.takeHit();
-                            anim.Play("DoubleAttack");
-                            
-
+                                eHp.takeHit();
+                                anim.Play("DoubleAttack");
+                            }
+                                                      
                         }
                    
                     }   
 
                 }
             }
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                anim.Play("SpinAttack");
+                Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10f);
+                float cooldown = 5.0f;
+                if(tmpsAvtProchaineAtq <= Time.time) {
+                    anim.Play("SpinAttack");
+
+                    for (int i = 0; i < hitColliders.Length; i++)
+                    {
+                        if ( hitColliders[i].gameObject.tag =="Enemy")
+                        {
+
+                            EnemyHealth eHp = hitColliders[i].gameObject.GetComponent<EnemyHealth>();
+                            eHp.takeHit();
+                            Debug.Log("touché");
+                        }
+                    }
+                    tmpsAvtProchaineAtq = Time.time + cooldown;
+                }
             }
 
         }
@@ -118,9 +138,6 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    IEnumerator cooldown(float cd)
-    {
-        yield return  new WaitForSeconds(cd);
-    }
+    
 
 }
