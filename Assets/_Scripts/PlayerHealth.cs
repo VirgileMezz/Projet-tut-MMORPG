@@ -1,24 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour {
 
     [SerializeField] int startingHealth = 100;
     [SerializeField] float timeSinceLastHit = 2f; // pour la régnération auto après avoir pris des degats.
+    [SerializeField] Slider healthSlider;
 
     private float timer = 0f;
     private CharacterController characterController;
     private Animator anim;
     private int currentHealth;
+    private ParticleSystem blood;
     //private AudioSource audio;
 
-	// Use this for initialization
-	void Start () {
+
+    void Awake()
+    {
+        Assert.IsNotNull(healthSlider);
+    }
+
+    // Use this for initialization
+    void Start () {
         anim = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
         currentHealth = startingHealth;
         //audio = GetComponent<AudioSource>();
+        blood = GetComponentInChildren<ParticleSystem>();
 	}
 	
 	// Update is called once per frame
@@ -45,7 +56,9 @@ public class PlayerHealth : MonoBehaviour {
             GameManager.instance.PlayerHit(currentHealth);
             anim.Play("Hurt");
             currentHealth -= 10;
+            healthSlider.value = currentHealth;
             //audio.PlayOneShot(audio.clip);
+            blood.Play();
         }
 
         if(currentHealth <= 0)
@@ -60,5 +73,6 @@ public class PlayerHealth : MonoBehaviour {
         anim.SetTrigger("HeroDie");
         characterController.enabled = false;
         //audio.PlayOneShot(audio.clip);
+        blood.Play();
     }
 }
