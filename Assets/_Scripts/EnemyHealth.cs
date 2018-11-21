@@ -58,7 +58,7 @@ public class EnemyHealth : MonoBehaviour {
         {
             if (other.tag == "PlayerWeapon")
             {
-                takeHit();
+                Debug.Log("touche arme");
                 timer = 0f;
             }
            

@@ -43,13 +43,14 @@ public class PlayerHealth : MonoBehaviour {
         {
             if(other.tag == "Weapon")
             {
-                takeHit();
+                Debug.Log("touche arme");
+
                 timer = 0;
             }
         }
     }
 
-    void takeHit()
+    public void takeHit()
     {
         if(currentHealth> 0)
         {
@@ -74,5 +75,15 @@ public class PlayerHealth : MonoBehaviour {
         characterController.enabled = false;
         //audio.PlayOneShot(audio.clip);
         blood.Play();
+    }
+
+    public int getCurrentHealth()
+    {
+        return currentHealth;
+    }
+
+    public int getMaxVie()
+    {
+        return startingHealth;
     }
 }
