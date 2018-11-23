@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour {
                     float cooldown = 2.0f;
 
                     //characterController.height / 2
-                    if (Physics.SphereCast(transform.position, 10f , transform.forward, out hit, 5))
+                    if (Physics.SphereCast(transform.position, 5f , transform.forward, out hit, 5))
                     {
                         if(cible = hit.collider.gameObject)
                         {

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour {
 
     [SerializeField] int startingHealth = 100;
-    [SerializeField] float timeSinceLastHit = 2f; // pour la régnération auto après avoir pris des degats.
+    [SerializeField] float timeSinceLastHit = 1f; // pour la régnération auto après avoir pris des degats.
     [SerializeField] Slider healthSlider;
 
     private float timer = 0f;
@@ -43,13 +43,14 @@ public class PlayerHealth : MonoBehaviour {
         {
             if(other.tag == "Weapon")
             {
-                takeHit();
+                Debug.Log("touche arme");
+
                 timer = 0;
             }
         }
     }
 
-    void takeHit()
+    public void takeHit()
     {
         if(currentHealth> 0)
         {
@@ -74,5 +75,15 @@ public class PlayerHealth : MonoBehaviour {
         characterController.enabled = false;
         //audio.PlayOneShot(audio.clip);
         blood.Play();
+    }
+
+    public int getCurrentHealth()
+    {
+        return currentHealth;
+    }
+
+    public int getMaxVie()
+    {
+        return startingHealth;
     }
 }

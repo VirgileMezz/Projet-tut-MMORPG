@@ -31,6 +31,7 @@ public class EnemyHealth : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+        GameManager.instance.RegisterEnemy(this);
         rigidbody = GetComponent<Rigidbody>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         nav = GetComponent<NavMeshAgent>();
@@ -58,7 +59,7 @@ public class EnemyHealth : MonoBehaviour {
         {
             if (other.tag == "PlayerWeapon")
             {
-                takeHit();
+                Debug.Log("touche arme");
                 timer = 0f;
             }
            
@@ -84,6 +85,7 @@ public class EnemyHealth : MonoBehaviour {
 
     void KillEnemy()
     {
+        GameManager.instance.KilledEnemy(this);
         capsuleCollider.enabled = false;
         nav.enabled = false;
         anim.SetTrigger("EnemyDie");
