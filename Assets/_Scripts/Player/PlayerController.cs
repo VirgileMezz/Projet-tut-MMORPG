@@ -76,11 +76,17 @@ public class PlayerController : MonoBehaviour {
                     GameObject cible = sc.getCible();
                     EnemyHealth eHp = cible.GetComponent<EnemyHealth>();
                     float cooldown = 2.0f;
+                    Collider[] hitColliders = Physics.OverlapBox(transform.position - (Vector3.forward*3),new Vector3(1.5f,1f,1.5f), Quaternion.identity);
 
+
+                    //Vector3 point1 = transform.position + (-3*Vector3.right);
+                    //Vector3 point2 = transform.position + (3 * Vector3.right);
                     //characterController.height / 2
-                    if (Physics.SphereCast(transform.position, 5f , transform.forward, out hit, 5))
+                    //if (Physics.SphereCast(transform.position, 5f , transform.forward, out hit, 5))
+                    // if (Physics.CapsuleCast(point1, point2, 0.5f , transform.forward, out hit, 5))
+                    for (int i = 0; i < hitColliders.Length; i++)
                     {
-                        if(cible = hit.collider.gameObject)
+                        if (hitColliders[i].gameObject == cible)
                         {
                             if (tmpsAvtProchaineAtq <= Time.time)
                             {

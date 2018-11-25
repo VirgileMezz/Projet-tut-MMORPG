@@ -6,7 +6,7 @@ public class EnemyAttack : MonoBehaviour {
 
     [SerializeField] private float range = 3f;
     [SerializeField] private float timeBetweenAttacks = 2f;
-    [SerializeField] private GameObject player;
+    private GameObject player; //[SerializeField] 
 
     // [SerializeField] Transform player;
 
@@ -19,10 +19,10 @@ public class EnemyAttack : MonoBehaviour {
     private float tmpsAvtProchaineAtq;
     // Use this for initialization
     void Start () {
-        pHP = player.GetComponent<PlayerHealth>();
         enemyHealth = GetComponent<EnemyHealth>();
         weaponColliders = GetComponentsInChildren<BoxCollider>();
         player = GameManager.instance.Player;
+        pHP = player.GetComponent<PlayerHealth>();
         anim = GetComponent<Animator>();
     }
 	
