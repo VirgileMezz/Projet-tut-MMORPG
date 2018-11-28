@@ -90,36 +90,41 @@ public class GameManager : MonoBehaviour {
 
     IEnumerator spawn()
     {
-        if(currentSpawnTime > generatedSpawnTime)
+        if (spawnPoints != null && tanker != null && ranger != null && soldier != null && levelText != null)
         {
-            currentSpawnTime = 0;
 
-            if (enemies.Count < currentLevel)
+       
+            if(currentSpawnTime > generatedSpawnTime)
             {
-                int randomNumber = Random.Range(0, spawnPoints.Length - 1);
-                GameObject spawnLocation = spawnPoints[randomNumber];
-                int randomEnemy = Random.Range(0, 3);
+                currentSpawnTime = 0;
+
+                if (enemies.Count < currentLevel)
+                {
+                    int randomNumber = Random.Range(0, spawnPoints.Length - 1);
+                    GameObject spawnLocation = spawnPoints[randomNumber];
+                    int randomEnemy = Random.Range(0, 3);
                 
-                if(randomEnemy == 0)
-                    newEnemy = Instantiate(soldier) as GameObject;
-                else if(randomEnemy == 1 )
-                    newEnemy = Instantiate(tanker) as GameObject;
-                else if(randomEnemy == 2)
-                    newEnemy = Instantiate(soldier) as GameObject; // mettre le ranger, quand on aura rendu le ranger opérationnel
+                    if(randomEnemy == 0)
+                        newEnemy = Instantiate(soldier) as GameObject;
+                    else if(randomEnemy == 1 )
+                        newEnemy = Instantiate(tanker) as GameObject;
+                    else if(randomEnemy == 2)
+                        newEnemy = Instantiate(soldier) as GameObject; // mettre le ranger, quand on aura rendu le ranger opérationnel
 
-                newEnemy.transform.position = spawnLocation.transform.position;
-            }
-            if(killedEnemies.Count == currentLevel)
-            {
-                enemies.Clear();
-                killedEnemies.Clear();
-                yield return new WaitForSeconds(3f); // on attend 3 sec a la fin de la wave
-                currentLevel++;
-                levelText.text = "Wave : " + currentLevel;
+                    newEnemy.transform.position = spawnLocation.transform.position;
+                }
+                if(killedEnemies.Count == currentLevel)
+                {
+                    enemies.Clear();
+                    killedEnemies.Clear();
+                    yield return new WaitForSeconds(3f); // on attend 3 sec a la fin de la wave
+                    currentLevel++;
+                    levelText.text = "Wave : " + currentLevel;
 
+                }
             }
+            yield return null;
+            StartCoroutine(spawn());
         }
-        yield return null;
-        StartCoroutine(spawn());
     }
 }
