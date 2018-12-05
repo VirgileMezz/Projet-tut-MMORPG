@@ -1670,8 +1670,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 3
-  timeBetweenAttacks: 1
-  player: {fileID: 0}
+  timeBetweenAttacks: 3
 --- !u!136 &136347297770679022
 CapsuleCollider:
   m_ObjectHideFlags: 1

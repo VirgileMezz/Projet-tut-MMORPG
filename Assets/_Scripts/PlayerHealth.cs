@@ -8,7 +8,7 @@ public class PlayerHealth : MonoBehaviour {
 
     [SerializeField] int startingHealth = 100;
     [SerializeField] float timeSinceLastHit = 1f; // pour la régnération auto après avoir pris des degats.
-    [SerializeField] Slider healthSlider;
+    Slider healthSlider;
 
     private float timer = 0f;
     private CharacterController characterController;
@@ -20,6 +20,7 @@ public class PlayerHealth : MonoBehaviour {
 
     void Awake()
     {
+        healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
         Assert.IsNotNull(healthSlider);
     }
 
@@ -52,7 +53,7 @@ public class PlayerHealth : MonoBehaviour {
 
     public void takeHit()
     {
-        if(currentHealth> 0)
+        if(currentHealth > 0)
         {
             GameManager.instance.PlayerHit(currentHealth);
             anim.Play("Hurt");

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class PlayerController : MonoBehaviour {
     [SerializeField] private float moveSpeed = 10.0f;
@@ -9,8 +11,8 @@ public class PlayerController : MonoBehaviour {
 
     private CharacterController characterController;
     private Vector3 currentLookTarget = Vector3.zero;
-    private Transform cam;                 
-    private Vector3 camForward;             
+    private Transform cam;
+    private Vector3 camForward;
     private Vector3 move;
 
     private Vector3 playerFwd;
@@ -20,24 +22,33 @@ public class PlayerController : MonoBehaviour {
 
     private SystemCiblage sc;
 
-    private float tmpsAvtProchaineAtq;
-    
+    private float tmpsAvtProchaineAtq1;
+    private float tmpsAvtProchaineAtq2;
+    private float expGagne = 0.2f;
+
+
+    private bool canGainExp;
+    private Slider expBar; 
+
+    private AttaqueScript aS;
     //private void Awake()
     //{
-      //  DontDestroyOnLoad(gameObject);
+    //  DontDestroyOnLoad(gameObject);
     //}
-    
-    void Start () {
+
+    void Start() {
 
         sc = gameObject.GetComponent<SystemCiblage>();
         characterController = GetComponent<CharacterController>();
         cam = camera.transform;
         anim = GetComponent<Animator>();
         swordColliders = GetComponentsInChildren<BoxCollider>();
+        expBar = GameObject.Find("ExpBar").GetComponent<Slider>();
+        aS = GameObject.Find("ActionButton2").GetComponent<AttaqueScript>();
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update() {
         camForward = Vector3.Scale(cam.forward, new Vector3(1, 0, 1)).normalized;
         playerFwd = Vector3.Scale(transform.forward, new Vector3(1, 0, 1)).normalized;
 
@@ -69,63 +80,100 @@ public class PlayerController : MonoBehaviour {
 
             if (Input.GetKeyDown(KeyCode.Alpha1)) // Je met les boutons de la souris pour le moment
             {
-                if (sc.getCible() != null)
-                {
-                    RaycastHit hit;
-                    print(sc.getCible());
-                    GameObject cible = sc.getCible();
-                    EnemyHealth eHp = cible.GetComponent<EnemyHealth>();
-                    float cooldown = 2.0f;
-                    Collider[] hitColliders = Physics.OverlapBox(transform.position - (Vector3.forward*3),new Vector3(1.5f,1f,1.5f), Quaternion.identity);
-
-
-                    //Vector3 point1 = transform.position + (-3*Vector3.right);
-                    //Vector3 point2 = transform.position + (3 * Vector3.right);
-                    //characterController.height / 2
-                    //if (Physics.SphereCast(transform.position, 5f , transform.forward, out hit, 5))
-                    // if (Physics.CapsuleCast(point1, point2, 0.5f , transform.forward, out hit, 5))
-                    for (int i = 0; i < hitColliders.Length; i++)
-                    {
-                        if (hitColliders[i].gameObject == cible)
-                        {
-                            if (tmpsAvtProchaineAtq <= Time.time)
-                            {
-                                tmpsAvtProchaineAtq = Time.time + cooldown;
-
-                                eHp.takeHit();
-                                anim.Play("DoubleAttack");
-                            }
-                                                      
-                        }
-                   
-                    }   
-
-                }
+                doubleAttaque();
             }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
+            if (aS.getCanAttaque2())//Input.GetKeyDown(KeyCode.Alpha2)
             {
-                Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10f);
-                float cooldown = 5.0f;
-                if(tmpsAvtProchaineAtq <= Time.time) {
-                    anim.Play("SpinAttack");
-
-                    for (int i = 0; i < hitColliders.Length; i++)
-                    {
-                        if ( hitColliders[i].gameObject.tag =="Enemy")
-                        {
-
-                            EnemyHealth eHp = hitColliders[i].gameObject.GetComponent<EnemyHealth>();
-                            eHp.takeHit();
-                            Debug.Log("touché");
-                        }
-                    }
-                    tmpsAvtProchaineAtq = Time.time + cooldown;
-                }
+                spinAttaque();
+                aS.setCanAttaque2(false);
             }
 
         }
     }
 
+
+
+    public void doubleAttaque()
+    {
+        if (sc.getCible() != null)
+        {
+            RaycastHit hit;
+            print(sc.getCible());
+            GameObject cible = sc.getCible();
+            EnemyHealth eHp = cible.GetComponent<EnemyHealth>();
+            float cooldown = 2.0f;
+            Collider[] hitColliders = Physics.OverlapBox(transform.position - (Vector3.forward * 3), new Vector3(2f, 1f, 2f), Quaternion.identity);
+
+
+            //Vector3 point1 = transform.position + (-3*Vector3.right);
+            //Vector3 point2 = transform.position + (3 * Vector3.right);
+            //characterController.height / 2
+            //if (Physics.SphereCast(transform.position, 5f , transform.forward, out hit, 5))
+            // if (Physics.CapsuleCast(point1, point2, 0.5f , transform.forward, out hit, 5))
+            for (int i = 0; i < hitColliders.Length; i++)
+            {
+                if (hitColliders[i].gameObject == cible)
+                {
+                    if (tmpsAvtProchaineAtq1 <= Time.time)
+                    {
+                        tmpsAvtProchaineAtq1 = Time.time + cooldown;
+
+                        eHp.takeHit();
+                        augmentationExp();
+                        anim.Play("DoubleAttack");
+                    }
+
+                }
+
+            }
+
+        }
+    }
+
+    public void spinAttaque()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10f);
+        float cooldown = 5.0f;
+        if (tmpsAvtProchaineAtq2 <= Time.time)
+        {
+            anim.Play("SpinAttack");
+
+            for (int i = 0; i < hitColliders.Length; i++)
+            {
+                if (hitColliders[i].gameObject.tag == "Enemy")
+                {
+
+                    EnemyHealth eHp = hitColliders[i].gameObject.GetComponent<EnemyHealth>();
+                    eHp.takeHit();
+                    if (!eHp.IsAlive())
+                    {
+                        expBar.value += 0.2f;
+                        Debug.Log("adversaire tué avec aoe");
+                    }
+                    //augmentationExp();
+                    Debug.Log("touché");
+                }
+            }
+            tmpsAvtProchaineAtq2 = Time.time + cooldown;
+        }
+    }
+
+    public void augmentationExp()
+    {
+
+        if(sc.getCible() != null)
+        {
+            //GameObject cible = sc.getCible();
+            EnemyHealth eHp = sc.getCible().GetComponent<EnemyHealth>();
+            if (!eHp.IsAlive())
+            {
+                expBar.value += expGagne;
+                Debug.Log("adversaire tué");
+
+            }
+        }
+    }
+    
     public void BeginAttack()
     {
         foreach( var weapon in swordColliders)

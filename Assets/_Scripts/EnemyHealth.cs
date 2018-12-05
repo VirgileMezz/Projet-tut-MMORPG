@@ -21,10 +21,7 @@ public class EnemyHealth : MonoBehaviour {
     private ParticleSystem blood;
 
 
-    public bool IsAlive()
-    {
-        return isAlive; 
-    }
+   
 
 
 
@@ -105,5 +102,8 @@ public class EnemyHealth : MonoBehaviour {
 
     }
 
-
+    public bool IsAlive()
+    {
+        return isAlive;
+    }
 }

@@ -1701,8 +1701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 3
-  timeBetweenAttacks: 1
-  player: {fileID: 0}
+  timeBetweenAttacks: 3
 --- !u!114 &114964751950579302
 MonoBehaviour:
   m_ObjectHideFlags: 1
