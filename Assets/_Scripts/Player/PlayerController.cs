@@ -28,9 +28,13 @@ public class PlayerController : MonoBehaviour {
 
 
     private bool canGainExp;
-    private Slider expBar; 
+    private Slider expBar;
 
-    private AttaqueScript aS;
+    private AttaqueScript[] aS;
+    private AttaqueScript aS1;
+    private AttaqueScript aS2;
+    private GameObject barreAction;
+
     //private void Awake()
     //{
     //  DontDestroyOnLoad(gameObject);
@@ -44,7 +48,10 @@ public class PlayerController : MonoBehaviour {
         anim = GetComponent<Animator>();
         swordColliders = GetComponentsInChildren<BoxCollider>();
         expBar = GameObject.Find("ExpBar").GetComponent<Slider>();
-        aS = GameObject.Find("ActionButton2").GetComponent<AttaqueScript>();
+        barreAction = GameObject.Find("BarreAction");
+        aS = barreAction.GetComponentsInChildren<AttaqueScript>();
+        //aS1 = GameObject.Find("ActionButton1").GetComponent<AttaqueScript>();
+
     }
 
     // Update is called once per frame
@@ -78,14 +85,15 @@ public class PlayerController : MonoBehaviour {
 
             // pour l'anim des attacks
 
-            if (Input.GetKeyDown(KeyCode.Alpha1)) // Je met les boutons de la souris pour le moment
+            if (aS[0].getCanAttaque1()) // Input.GetKeyDown(KeyCode.Alpha1)
             {
                 doubleAttaque();
+                aS[0].setCanAttaque1(false);
             }
-            if (aS.getCanAttaque2())//Input.GetKeyDown(KeyCode.Alpha2)
+            if (aS[1].getCanAttaque2())//Input.GetKeyDown(KeyCode.Alpha2)
             {
                 spinAttaque();
-                aS.setCanAttaque2(false);
+                aS[1].setCanAttaque2(false);
             }
 
         }

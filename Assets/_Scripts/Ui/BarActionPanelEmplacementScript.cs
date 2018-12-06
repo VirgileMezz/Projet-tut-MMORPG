@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BarActionPanelEmplacementScript : MonoBehaviour {
     public string keyC ;
@@ -14,6 +15,7 @@ public class BarActionPanelEmplacementScript : MonoBehaviour {
         if (Input.GetKeyDown(keyC))
         {
             Debug.Log("fait untruc");
+            GetComponentInChildren<Button>().onClick.Invoke();
         }
 	}
 }
