@@ -31,10 +31,8 @@ public class PlayerController : MonoBehaviour {
     private Slider expBar;
 
     private AttaqueScript[] aS;
-    private AttaqueScript aS1;
-    private AttaqueScript aS2;
     private GameObject barreAction;
-
+    [SerializeField] private GameObject particleSpinAttaque;
     //private void Awake()
     //{
     //  DontDestroyOnLoad(gameObject);
@@ -94,6 +92,7 @@ public class PlayerController : MonoBehaviour {
             {
                 spinAttaque();
                 aS[1].setCanAttaque2(false);
+
             }
 
         }
@@ -162,6 +161,7 @@ public class PlayerController : MonoBehaviour {
                     Debug.Log("touché");
                 }
             }
+            Instantiate(particleSpinAttaque, gameObject.transform);
             tmpsAvtProchaineAtq2 = Time.time + cooldown;
         }
     }
