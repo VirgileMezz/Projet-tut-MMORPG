@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour {
 
     private void Start()
     {
-        //player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
         pHP = player.GetComponent<PlayerHealth>();
         //curHpTxt = GetComponent<Text>();
         //MaxHpTxt = GetComponent<Text>();

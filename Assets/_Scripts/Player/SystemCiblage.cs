@@ -13,7 +13,7 @@ public class SystemCiblage : MonoBehaviour {
     private bool canInstatiateEffect = true;
     // Use this for initialization
     void Start () {
-		
+        camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 	}
 	
 	// Update is called once per frame
@@ -58,5 +58,13 @@ public class SystemCiblage : MonoBehaviour {
     public GameObject getCible()
     {
         return cible;
+    }
+    void OnLevelWasLoaded()
+    {
+        if (camera == null)
+        {
+            camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+
+        }
     }
 }

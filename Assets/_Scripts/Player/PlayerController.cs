@@ -33,15 +33,16 @@ public class PlayerController : MonoBehaviour {
     private AttaqueScript[] aS;
     private GameObject barreAction;
     [SerializeField] private GameObject particleSpinAttaque;
-    //private void Awake()
-    //{
-    //  DontDestroyOnLoad(gameObject);
-    //}
+    private void Awake()
+    {
+      DontDestroyOnLoad(gameObject);
+    }
 
     void Start() {
 
         sc = gameObject.GetComponent<SystemCiblage>();
         characterController = GetComponent<CharacterController>();
+        camera = GameObject.FindGameObjectWithTag("MainCamera");
         cam = camera.transform;
         anim = GetComponent<Animator>();
         swordColliders = GetComponentsInChildren<BoxCollider>();
@@ -199,7 +200,31 @@ public class PlayerController : MonoBehaviour {
 
         }
     }
+    void OnLevelWasLoaded()
+    {
+        if(camera == null)
+        {
+            /*camera = GameObject.FindGameObjectWithTag("MainCamera");
+            cam = camera.transform;
+            expBar = GameObject.Find("ExpBar").GetComponent<Slider>();
+            barreAction = GameObject.Find("BarreAction");
+            aS = barreAction.GetComponentsInChildren<AttaqueScript>();*/
+            init();
 
-    
+        }
+    }
+
+    private void init()
+    {
+        sc = gameObject.GetComponent<SystemCiblage>();
+        characterController = GetComponent<CharacterController>();
+        camera = GameObject.FindGameObjectWithTag("MainCamera");
+        cam = camera.transform;
+        anim = GetComponent<Animator>();
+        swordColliders = GetComponentsInChildren<BoxCollider>();
+        expBar = GameObject.Find("ExpBar").GetComponent<Slider>();
+        barreAction = GameObject.Find("BarreAction");
+        aS = barreAction.GetComponentsInChildren<AttaqueScript>();
+    }
 
 }

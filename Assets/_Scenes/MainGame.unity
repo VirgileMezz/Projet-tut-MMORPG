@@ -51147,6 +51147,10 @@ Prefab:
       propertyPath: BypassReverbZones
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1890826601384506, guid: c7862107dc0b5a0488930c274c72656b, type: 2}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7862107dc0b5a0488930c274c72656b, type: 2}
   m_IsPrefabAsset: 0
@@ -68775,6 +68779,53 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1171900131}
   m_Mesh: {fileID: 4300538, guid: c295b00c9d656e34f8dbd6e1bc3d37ef, type: 3}
+--- !u!1001 &1174111119
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4955740189410778, guid: edb547757b188114fac24509c0520d88, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4955740189410778, guid: edb547757b188114fac24509c0520d88, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4955740189410778, guid: edb547757b188114fac24509c0520d88, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4955740189410778, guid: edb547757b188114fac24509c0520d88, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4955740189410778, guid: edb547757b188114fac24509c0520d88, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4955740189410778, guid: edb547757b188114fac24509c0520d88, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4955740189410778, guid: edb547757b188114fac24509c0520d88, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4955740189410778, guid: edb547757b188114fac24509c0520d88, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114304882675657476, guid: edb547757b188114fac24509c0520d88,
+        type: 2}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 264402374}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: edb547757b188114fac24509c0520d88, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &1174830106
 GameObject:
   m_ObjectHideFlags: 0
@@ -103419,52 +103470,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1794085794}
   m_Mesh: {fileID: 4301166, guid: c295b00c9d656e34f8dbd6e1bc3d37ef, type: 3}
---- !u!1 &1794810811
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1794810813}
-  - component: {fileID: 1794810812}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1794810812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1794810811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ad6b759cbde39b48a7c4ca1dc372175, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 264402374}
-  spawnPoints: []
-  tanker: {fileID: 0}
-  ranger: {fileID: 0}
-  soldier: {fileID: 0}
-  levelText: {fileID: 0}
---- !u!4 &1794810813
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1794810811}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 2.4563155, y: 0, z: -2.65}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1795100264
 GameObject:
   m_ObjectHideFlags: 0

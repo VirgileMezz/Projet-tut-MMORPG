@@ -6,9 +6,13 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 
     public static GameManager instance = null;
+    public static GameObject instancePlayer = null;
+
 
     [SerializeField] GameObject player;
     [SerializeField] GameObject[] spawnPoints;
+    [SerializeField] List<GameObject> spawnPoint;
+
     [SerializeField] GameObject tanker;
     [SerializeField] GameObject ranger;
     [SerializeField] GameObject soldier;
@@ -61,6 +65,7 @@ public class GameManager : MonoBehaviour {
         {
             player = GameObject.FindWithTag("Player");
         }
+     
 
         DontDestroyOnLoad(gameObject);
     }
@@ -69,7 +74,7 @@ public class GameManager : MonoBehaviour {
     void Start () {
         StartCoroutine(spawn());
         currentLevel = 1;
-    
+        Debug.Log("game manager fonction start called");
 	}
 	
 	// Update is called once per frame
@@ -100,8 +105,11 @@ public class GameManager : MonoBehaviour {
 
                 if (enemies.Count < currentLevel)
                 {
-                    int randomNumber = Random.Range(0, spawnPoints.Length - 1);
-                    GameObject spawnLocation = spawnPoints[randomNumber];
+                    //int randomNumber = Random.Range(0, spawnPoints.Length - 1);
+                    int randomNumber = Random.Range(0, spawnPoint.Count - 1);
+                    //GameObject spawnLocation = spawnPoints[randomNumber];
+                    GameObject spawnLocation = spawnPoint[randomNumber];
+                    Debug.Log(spawnPoint[randomNumber]);
                     int randomEnemy = Random.Range(0, 3);
                 
                     if(randomEnemy == 0)
@@ -126,5 +134,29 @@ public class GameManager : MonoBehaviour {
             yield return null;
             StartCoroutine(spawn());
         }
+    }
+    void OnLevelWasLoaded()
+    {
+        if (player == null)
+        {
+            player = GameObject.FindWithTag("Player");
+        }
+        levelText = GameObject.Find("WaveText").GetComponent<Text>();
+        player.transform.position = new Vector3(60f, 0.1f, 50f);
+
+        Transform spawnPrt = GameObject.Find("SpawnMobs").GetComponent<Transform>();
+        foreach(Transform child in spawnPrt)
+        {
+            spawnPoint.Add(child.gameObject);
+        }
+        //spawnPoints = GameObject.Find("SpawnMobs").GetComponentsInChildren<Transform>();
+        Debug.Log(spawnPoint.Count);
+        //spawnPoints[1] = spawn.transform.GetChild(1).gameObject;
+
+        // get gameobject de soldier truc et muche
+        //tanker = GameObject.Find();
+        StartCoroutine(spawn());
+        Debug.Log("nouvelle scene");
+
     }
 }

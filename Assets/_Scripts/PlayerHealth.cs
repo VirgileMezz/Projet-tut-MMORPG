@@ -8,7 +8,7 @@ public class PlayerHealth : MonoBehaviour {
 
     [SerializeField] int startingHealth = 100;
     [SerializeField] float timeSinceLastHit = 1f; // pour la régnération auto après avoir pris des degats.
-    Slider healthSlider;
+    [SerializeField]Slider healthSlider;
 
     private float timer = 0f;
     private CharacterController characterController;
@@ -86,5 +86,11 @@ public class PlayerHealth : MonoBehaviour {
     public int getMaxVie()
     {
         return startingHealth;
+    }
+
+     void OnLevelWasLoaded()
+    {
+        healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
+        Assert.IsNotNull(healthSlider);
     }
 }
