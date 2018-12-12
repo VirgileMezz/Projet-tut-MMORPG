@@ -13,7 +13,7 @@ public class PlayerHealth : MonoBehaviour {
     private float timer = 0f;
     private CharacterController characterController;
     private Animator anim;
-    private int currentHealth;
+    private int currentHealth,healthMax;
     private ParticleSystem blood;
     //private AudioSource audio;
 
@@ -29,6 +29,7 @@ public class PlayerHealth : MonoBehaviour {
         anim = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
         currentHealth = startingHealth;
+        healthMax = startingHealth;
         //audio = GetComponent<AudioSource>();
         blood = GetComponentInChildren<ParticleSystem>();
 	}
@@ -55,7 +56,7 @@ public class PlayerHealth : MonoBehaviour {
     {
         if(currentHealth > 0)
         {
-            GameManager.instance.PlayerHit(currentHealth);
+            GameManager.instance.PlayerHit(healthMax);
             anim.Play("Hurt");
             currentHealth -= 10;
             healthSlider.value = currentHealth;
@@ -85,10 +86,20 @@ public class PlayerHealth : MonoBehaviour {
 
     public int getMaxVie()
     {
-        return startingHealth;
+        return healthMax;
     }
 
-     void OnLevelWasLoaded()
+    public void setMaxVie(int maxVie)
+    {
+        this.healthMax= maxVie;
+    }
+
+    public void setCurrentHealth(int vie)
+    {
+        this.currentHealth = vie;
+    }
+
+    void OnLevelWasLoaded()
     {
         healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
         Assert.IsNotNull(healthSlider);

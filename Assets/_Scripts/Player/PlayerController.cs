@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private float moveSpeed = 10.0f;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private GameObject camera;
+    [SerializeField] private PlayerHealth playerHealth;
 
     private CharacterController characterController;
     private Vector3 currentLookTarget = Vector3.zero;
@@ -24,7 +25,9 @@ public class PlayerController : MonoBehaviour {
 
     private float tmpsAvtProchaineAtq1;
     private float tmpsAvtProchaineAtq2;
-    private float expGagne = 0.2f;
+    private float expGagne = 0.8f;
+
+    private int levelCharacter = 1;
 
 
     private bool canGainExp;
@@ -33,6 +36,9 @@ public class PlayerController : MonoBehaviour {
     private AttaqueScript[] aS;
     private GameObject barreAction;
     [SerializeField] private GameObject particleSpinAttaque;
+    [SerializeField] Slider healthSlider;
+
+
     private void Awake()
     {
       DontDestroyOnLoad(gameObject);
@@ -42,6 +48,7 @@ public class PlayerController : MonoBehaviour {
 
         sc = gameObject.GetComponent<SystemCiblage>();
         characterController = GetComponent<CharacterController>();
+        playerHealth = gameObject.GetComponent<PlayerHealth>();
         camera = GameObject.FindGameObjectWithTag("MainCamera");
         cam = camera.transform;
         anim = GetComponent<Animator>();
@@ -50,6 +57,8 @@ public class PlayerController : MonoBehaviour {
         barreAction = GameObject.Find("BarreAction");
         aS = barreAction.GetComponentsInChildren<AttaqueScript>();
         //aS1 = GameObject.Find("ActionButton1").GetComponent<AttaqueScript>();
+        healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
+
 
     }
 
@@ -129,6 +138,7 @@ public class PlayerController : MonoBehaviour {
                         eHp.takeHit();
                         augmentationExp();
                         anim.Play("DoubleAttack");
+                        
                     }
 
                 }
@@ -177,7 +187,29 @@ public class PlayerController : MonoBehaviour {
             if (!eHp.IsAlive())
             {
                 expBar.value += expGagne;
-                Debug.Log("adversaire tué");
+             //   Debug.Log("adversaire tué");
+
+            }
+
+            // si j'arrive a l'xp max du slider 
+            if( expBar.value == 1)
+            {
+                Debug.Log("CA MARCHE");
+                levelCharacter += 1;
+                expBar.value = 0;          
+                playerHealth.setMaxVie(playerHealth.getMaxVie() + 20);  // j'up juste de 20 pv pour le moment
+                playerHealth.setCurrentHealth(playerHealth.getMaxVie()); // je remet la vie actuel au max 
+
+
+                healthSlider.maxValue = playerHealth.getMaxVie();
+                healthSlider.value = 1;
+               
+
+                // on gagne un niveau alors on up les stats
+
+
+
+
 
             }
         }
@@ -200,6 +232,7 @@ public class PlayerController : MonoBehaviour {
 
         }
     }
+
     void OnLevelWasLoaded()
     {
         if(camera == null)
