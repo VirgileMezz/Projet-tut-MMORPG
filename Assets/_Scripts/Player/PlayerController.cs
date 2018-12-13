@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour {
 
     private float tmpsAvtProchaineAtq1;
     private float tmpsAvtProchaineAtq2;
-    private float expGagne = 0.8f;
+    //private float expGagne = 0.40f;
 
     private int levelCharacter = 1;
 
@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private GameObject particleSpinAttaque;
     [SerializeField] Slider healthSlider;
 
+    private float expAvantLvlUp;
+    private float expReste;
 
     private void Awake()
     {
@@ -165,7 +167,7 @@ public class PlayerController : MonoBehaviour {
                     eHp.takeHit();
                     if (!eHp.IsAlive())
                     {
-                        expBar.value += 0.2f;
+                        augmentationExp();
                         Debug.Log("adversaire tué avec aoe");
                     }
                     //augmentationExp();
@@ -182,36 +184,67 @@ public class PlayerController : MonoBehaviour {
 
         if(sc.getCible() != null)
         {
+
             //GameObject cible = sc.getCible();
             EnemyHealth eHp = sc.getCible().GetComponent<EnemyHealth>();
             if (!eHp.IsAlive())
             {
-                expBar.value += expGagne;
-             //   Debug.Log("adversaire tué");
+                expAvantLvlUp = expBar.maxValue - expBar.value;
+                expBar.value += eHp.getExpGagnable();
 
+                //   Debug.Log("adversaire tué");
+
+                // si j'arrive a l'xp max du slider 
+                if (expBar.value == expBar.maxValue)
+                {
+                    //Debug.Log("CA MARCHE");
+                    levelCharacter += 1;
+                    expBar.value = 0;
+                    expBar.maxValue = expBar.maxValue * 1.5f;
+                    playerHealth.setMaxVie(playerHealth.getMaxVie() + 20);  // j'up juste de 20 pv pour le moment
+                    playerHealth.setCurrentHealth(playerHealth.getMaxVie()); // je remet la vie actuel au max 
+
+
+                    healthSlider.maxValue = playerHealth.getMaxVie();
+                    healthSlider.value = healthSlider.maxValue;
+
+
+                    // on gagne un niveau alors on up les stats
+                    Debug.Log("exp avant lvl up "+expAvantLvlUp);
+                    Debug.Log("exp gagné "+eHp.getExpGagnable());
+                    Debug.Log(" valeur de la bar exp "+expBar.value);
+                    expReste = eHp.getExpGagnable();
+                    if (expAvantLvlUp < eHp.getExpGagnable())
+                    {
+                        expReste -= expAvantLvlUp;
+                        expBar.value += expReste;
+
+                        Debug.Log("on rajoute l'exp restant");
+                        //expBar.value += eHp.getExpGagnable() - expAvantLvlUp ;
+                        /*while(expReste <= 0)
+                        {
+                            Debug.Log(" dans le while");
+                            expAvantLvlUp = expBar.maxValue - expBar.value;
+                            expBar.value += expReste;
+                            //expReste -= expAvantLvlUp;
+                            expReste -= 1;
+
+
+
+                            Debug.Log(" exp reste dans le while "+expReste);
+                            Debug.Log(" exp avant lvl up dans le while " + expAvantLvlUp);
+
+                            //expReste = 0;
+
+                        }*/
+
+                    }
+
+
+                }
             }
 
-            // si j'arrive a l'xp max du slider 
-            if( expBar.value == 1)
-            {
-                Debug.Log("CA MARCHE");
-                levelCharacter += 1;
-                expBar.value = 0;          
-                playerHealth.setMaxVie(playerHealth.getMaxVie() + 20);  // j'up juste de 20 pv pour le moment
-                playerHealth.setCurrentHealth(playerHealth.getMaxVie()); // je remet la vie actuel au max 
-
-
-                healthSlider.maxValue = playerHealth.getMaxVie();
-                healthSlider.value = 1;
-               
-
-                // on gagne un niveau alors on up les stats
-
-
-
-
-
-            }
+           
         }
     }
     
@@ -237,11 +270,7 @@ public class PlayerController : MonoBehaviour {
     {
         if(camera == null)
         {
-            /*camera = GameObject.FindGameObjectWithTag("MainCamera");
-            cam = camera.transform;
-            expBar = GameObject.Find("ExpBar").GetComponent<Slider>();
-            barreAction = GameObject.Find("BarreAction");
-            aS = barreAction.GetComponentsInChildren<AttaqueScript>();*/
+        
             init();
 
         }
@@ -249,7 +278,7 @@ public class PlayerController : MonoBehaviour {
 
     private void init()
     {
-        sc = gameObject.GetComponent<SystemCiblage>();
+        /*sc = gameObject.GetComponent<SystemCiblage>();
         characterController = GetComponent<CharacterController>();
         camera = GameObject.FindGameObjectWithTag("MainCamera");
         cam = camera.transform;
@@ -257,7 +286,18 @@ public class PlayerController : MonoBehaviour {
         swordColliders = GetComponentsInChildren<BoxCollider>();
         expBar = GameObject.Find("ExpBar").GetComponent<Slider>();
         barreAction = GameObject.Find("BarreAction");
+        aS = barreAction.GetComponentsInChildren<AttaqueScript>();*/
+        sc = gameObject.GetComponent<SystemCiblage>();
+        characterController = GetComponent<CharacterController>();
+        playerHealth = gameObject.GetComponent<PlayerHealth>();
+        camera = GameObject.FindGameObjectWithTag("MainCamera");
+        cam = camera.transform;
+        anim = GetComponent<Animator>();
+        swordColliders = GetComponentsInChildren<BoxCollider>();
+        expBar = GameObject.Find("ExpBar").GetComponent<Slider>();
+        barreAction = GameObject.Find("BarreAction");
         aS = barreAction.GetComponentsInChildren<AttaqueScript>();
+        healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
     }
 
 }

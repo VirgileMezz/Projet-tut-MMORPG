@@ -1690,6 +1690,7 @@ MonoBehaviour:
   startingHealth: 20
   timeSinceLastHit: 0.5
   dissapearSpeed: 2
+  expGagnable: 0.35
 --- !u!114 &114492699872477102
 MonoBehaviour:
   m_ObjectHideFlags: 1

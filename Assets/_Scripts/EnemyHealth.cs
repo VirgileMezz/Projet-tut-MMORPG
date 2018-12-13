@@ -8,6 +8,8 @@ public class EnemyHealth : MonoBehaviour {
     [SerializeField] private int startingHealth = 20;
     [SerializeField] private float timeSinceLastHit = 0.5f;
     [SerializeField] private float dissapearSpeed = 2f;
+    [SerializeField] private float expGagnable = 0.40f;
+
 
     //private AudioSource audio;
     private float timer = 0f;
@@ -105,5 +107,9 @@ public class EnemyHealth : MonoBehaviour {
     public bool IsAlive()
     {
         return isAlive;
+    }
+    public float getExpGagnable()
+    {
+        return expGagnable;
     }
 }

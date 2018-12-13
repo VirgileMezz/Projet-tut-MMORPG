@@ -8,7 +8,7 @@ public class PlayerHealth : MonoBehaviour {
 
     [SerializeField] int startingHealth = 100;
     [SerializeField] float timeSinceLastHit = 1f; // pour la régnération auto après avoir pris des degats.
-    [SerializeField]Slider healthSlider;
+    private Slider healthSlider;
 
     private float timer = 0f;
     private CharacterController characterController;
