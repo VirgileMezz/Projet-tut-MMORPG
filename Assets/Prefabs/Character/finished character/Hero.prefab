@@ -1161,7 +1161,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1890826601384506}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 48.786278, y: 0, z: 30.21}
+  m_LocalPosition: {x: 50.445023, y: 0, z: 36.375366}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4597191824172398}
@@ -2384,8 +2384,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   camera: {fileID: 0}
+  playerHealth: {fileID: 0}
   particleSpinAttaque: {fileID: 1430385759361938, guid: 9c44d5974dfdbac4b8e83df627c6a780,
     type: 2}
+  healthSlider: {fileID: 0}
 --- !u!137 &137092908689579986
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

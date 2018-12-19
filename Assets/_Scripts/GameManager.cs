@@ -145,10 +145,14 @@ public class GameManager : MonoBehaviour {
         player.transform.position = new Vector3(60f, 0.1f, 50f);
 
         Transform spawnPrt = GameObject.Find("SpawnMobs").GetComponent<Transform>();
-        foreach(Transform child in spawnPrt)
+        if(spawnPrt != null)
         {
-            spawnPoint.Add(child.gameObject);
+            foreach (Transform child in spawnPrt)
+            {
+                spawnPoint.Add(child.gameObject);
+            }
         }
+        
         //spawnPoints = GameObject.Find("SpawnMobs").GetComponentsInChildren<Transform>();
         Debug.Log(spawnPoint.Count);
         //spawnPoints[1] = spawn.transform.GetChild(1).gameObject;
