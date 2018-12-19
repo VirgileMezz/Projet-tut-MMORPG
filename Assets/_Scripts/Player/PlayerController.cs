@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour {
 
     private float expAvantLvlUp;
     private float expReste;
+    private float puissanceAttaque = 10;
 
     private void Awake()
     {
@@ -201,6 +202,7 @@ public class PlayerController : MonoBehaviour {
                     levelCharacter += 1;
                     expBar.value = 0;
                     expBar.maxValue = expBar.maxValue * 1.5f;
+                    puissanceAttaque = puissanceAttaque * 1.5f;
                     playerHealth.setMaxVie(playerHealth.getMaxVie() + 20);  // j'up juste de 20 pv pour le moment
                     playerHealth.setCurrentHealth(playerHealth.getMaxVie()); // je remet la vie actuel au max 
 
@@ -300,4 +302,8 @@ public class PlayerController : MonoBehaviour {
         healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
     }
 
+    public float getPuissanceAttaque()
+    {
+        return puissanceAttaque;
+    }
 }
