@@ -1689,6 +1689,7 @@ MonoBehaviour:
   startingHealth: 20
   timeSinceLastHit: 0.5
   dissapearSpeed: 2
+  expGagnable: 0.4
 --- !u!114 &114820425153946354
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1713,6 +1714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a08806a6aeb41e4983c9e25e411a2d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detectionRange: 30
 --- !u!136 &136540905558339172
 CapsuleCollider:
   m_ObjectHideFlags: 1

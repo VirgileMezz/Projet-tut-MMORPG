@@ -19,10 +19,10 @@ public class EnemyHealth : MonoBehaviour {
     private Rigidbody rigidbody;
     private CapsuleCollider capsuleCollider;
     private bool dissapearEnemy = false;
-    private int currentHealth;   // trop de variableeeeeeeeeeeeeeeee
+    private float currentHealth;   // trop de variableeeeeeeeeeeeeeeee
     private ParticleSystem blood;
-
-
+    private GameObject player;
+    private PlayerController pc;
    
 
 
@@ -39,6 +39,8 @@ public class EnemyHealth : MonoBehaviour {
         isAlive = true;
         currentHealth = startingHealth;
         blood = GetComponentInChildren<ParticleSystem>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        pc = player.GetComponent<PlayerController>();
 		
 	}
 	
@@ -71,7 +73,7 @@ public class EnemyHealth : MonoBehaviour {
         {
             //audio.PlayOneShot(audio.clip);
             anim.Play("Hurt");
-            currentHealth -= 10;
+            currentHealth -= pc.getPuissanceAttaque() ;
             blood.Play();
         }
 

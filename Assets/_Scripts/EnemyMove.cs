@@ -11,6 +11,7 @@ public class EnemyMove : MonoBehaviour {
     private NavMeshAgent nav;
     private Animator anim;
     private EnemyHealth enemyHealth;
+    [SerializeField] private float detectionRange = 40f;
     void Awake()
     {
         //player = GameManager.instance.Player.transform;
@@ -29,17 +30,35 @@ public class EnemyMove : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!GameManager.instance.GameOver && enemyHealth.IsAlive())
+        RaycastHit hit;
+        //if (Physics.Raycast(transform.position, player.transform.position, detectionRange))
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, detectionRange);
+        for (int i = 0; i < hitColliders.Length; i++)
         {
-            nav.SetDestination(player.position);
+            Debug.Log(hitColliders[i].gameObject.tag == "Player");
+            if (hitColliders[i].gameObject.tag == "Player")
+            {
+                //Debug.Log(hit.collider.gameObject == player);
+                if (!GameManager.instance.GameOver && enemyHealth.IsAlive())
+                {
+                    nav.enabled = true;
+                    nav.SetDestination(player.position);
+                    Debug.Log("on passe dans le set destination");
+                }
+
+                else if ((!GameManager.instance.GameOver || GameManager.instance.GameOver))
+                {
+                    nav.enabled = false;
+                    // anim.Play("Idle");
+                }
+                else
+                {
+                    nav.enabled = false;
+                    anim.Play("Idle");
+                }
+            }
         }
-        else if((!GameManager.instance.GameOver ||GameManager.instance.GameOver)  && !enemyHealth.IsAlive() ){
-            nav.enabled = false;
-           // anim.Play("Idle");
-        } else
-        {
-            nav.enabled = false;
-            anim.Play("Idle");
-        }
+        
+
     }
 }
