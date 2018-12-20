@@ -103,5 +103,6 @@ public class PlayerHealth : MonoBehaviour {
     {
         healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
         Assert.IsNotNull(healthSlider);
+        healthSlider.value = currentHealth;
     }
 }

@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour {
     private float expAvantLvlUp;
     private float expReste;
     private float puissanceAttaque = 10;
-
+    private Text charaLvlText;
     private void Awake()
     {
       DontDestroyOnLoad(gameObject);
@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour {
         aS = barreAction.GetComponentsInChildren<AttaqueScript>();
         //aS1 = GameObject.Find("ActionButton1").GetComponent<AttaqueScript>();
         healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
+        charaLvlText = GameObject.Find("CharaLevelText").GetComponent<Text>();
 
 
     }
@@ -122,8 +123,8 @@ public class PlayerController : MonoBehaviour {
             GameObject cible = sc.getCible();
             EnemyHealth eHp = cible.GetComponent<EnemyHealth>();
             float cooldown = 2.0f;
-            Collider[] hitColliders = Physics.OverlapBox(transform.position - (Vector3.forward * 3), new Vector3(2f, 1f, 2f), Quaternion.identity);
-
+            Collider[] hitColliders = Physics.OverlapBox(transform.position , new Vector3(4f, 1f, 4f), Quaternion.identity);//- (Vector3.forward * 3)
+            Debug.Log(transform.forward);
 
             //Vector3 point1 = transform.position + (-3*Vector3.right);
             //Vector3 point2 = transform.position + (3 * Vector3.right);
@@ -241,6 +242,7 @@ public class PlayerController : MonoBehaviour {
                         }*/
 
                     }
+                    charaLvlText.text = levelCharacter.ToString();
 
 
                 }
@@ -300,6 +302,8 @@ public class PlayerController : MonoBehaviour {
         barreAction = GameObject.Find("BarreAction");
         aS = barreAction.GetComponentsInChildren<AttaqueScript>();
         healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
+        charaLvlText = GameObject.Find("CharaLevelText").GetComponent<Text>();
+
     }
 
     public float getPuissanceAttaque()

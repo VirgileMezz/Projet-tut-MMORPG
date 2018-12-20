@@ -98,13 +98,16 @@ public class GameManager : MonoBehaviour {
         if (spawnPoints != null && tanker != null && ranger != null && soldier != null && levelText != null)
         {
 
-       
-            if(currentSpawnTime > generatedSpawnTime)
+
+            if (currentSpawnTime > generatedSpawnTime)
             {
+
                 currentSpawnTime = 0;
 
                 if (enemies.Count < currentLevel)
                 {
+                    Debug.Log("spawn dans if");
+
                     //int randomNumber = Random.Range(0, spawnPoints.Length - 1);
                     int randomNumber = Random.Range(0, spawnPoint.Count - 1);
                     //GameObject spawnLocation = spawnPoints[randomNumber];
@@ -137,6 +140,7 @@ public class GameManager : MonoBehaviour {
     }
     void OnLevelWasLoaded()
     {
+        spawnPoint.Clear();
         if (player == null)
         {
             player = GameObject.FindWithTag("Player");
@@ -147,9 +151,19 @@ public class GameManager : MonoBehaviour {
         Transform spawnPrt = GameObject.Find("SpawnMobs").GetComponent<Transform>();
         if(spawnPrt != null)
         {
-            foreach (Transform child in spawnPrt)
+            if(spawnPrt.childCount > 0)
             {
-                spawnPoint.Add(child.gameObject);
+
+                foreach (Transform child in spawnPrt)
+                {
+                    spawnPoint.Add(child.gameObject);
+                }
+
+                StartCoroutine(spawn());
+                currentSpawnTime = 0;
+                enemies.Clear();
+                killedEnemies.Clear();
+
             }
         }
         
@@ -159,8 +173,8 @@ public class GameManager : MonoBehaviour {
 
         // get gameobject de soldier truc et muche
         //tanker = GameObject.Find();
-        StartCoroutine(spawn());
-        Debug.Log("nouvelle scene");
+        currentLevel = 1;
 
+        Debug.Log("nouvelle scene");
     }
 }

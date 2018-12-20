@@ -24,41 +24,54 @@ public class EnemyMove : MonoBehaviour {
         player = GameManager.instance.Player.transform;
         enemyHealth = GetComponent<EnemyHealth>();
         anim = GetComponent<Animator>();
-        nav = GetComponent<NavMeshAgent>();
-
-	}
+        if(nav == null)
+        {
+            nav = GetComponent<NavMeshAgent>();
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        RaycastHit hit;
-        //if (Physics.Raycast(transform.position, player.transform.position, detectionRange))
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, detectionRange);
-        for (int i = 0; i < hitColliders.Length; i++)
+        if (nav.isOnNavMesh)
         {
-            Debug.Log(hitColliders[i].gameObject.tag == "Player");
-            if (hitColliders[i].gameObject.tag == "Player")
+            RaycastHit hit;
+            //if (Physics.Raycast(transform.position, player.transform.position, detectionRange))
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, detectionRange);
+            for (int i = 0; i < hitColliders.Length; i++)
             {
-                //Debug.Log(hit.collider.gameObject == player);
-                if (!GameManager.instance.GameOver && enemyHealth.IsAlive())
+                Debug.Log(hitColliders[i].gameObject.tag == "Player");
+                if (hitColliders[i].gameObject.tag == "Player")
                 {
-                    nav.enabled = true;
-                    nav.SetDestination(player.position);
-                    Debug.Log("on passe dans le set destination");
-                }
+                    //Debug.Log(hit.collider.gameObject == player);
+                    if (!GameManager.instance.GameOver && enemyHealth.IsAlive())
+                    {
+                        nav.enabled = true;
+                        nav.SetDestination(player.position);
+                        Debug.Log("on passe dans le set destination");
+                    }
 
-                else if ((!GameManager.instance.GameOver || GameManager.instance.GameOver))
-                {
-                    nav.enabled = false;
-                    // anim.Play("Idle");
-                }
-                else
-                {
-                    nav.enabled = false;
-                    anim.Play("Idle");
+                    else if ((!GameManager.instance.GameOver || GameManager.instance.GameOver))
+                    {
+                        nav.enabled = false;
+                        // anim.Play("Idle");
+                    }
+                    else
+                    {
+                        nav.enabled = false;
+                        anim.Play("Idle");
+                    }
                 }
             }
         }
         
+        
 
     }
+    /*void OnLevelWasLoaded()
+    {
+        player = GameManager.instance.Player.transform;
+        enemyHealth = GetComponent<EnemyHealth>();
+        anim = GetComponent<Animator>();
+        nav = GetComponent<NavMeshAgent>();
+    }*/
 }
