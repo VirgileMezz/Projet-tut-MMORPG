@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour {
 
     private float expAvantLvlUp;
     private float expReste;
+    private float currentExp;
     private float puissanceAttaque = 10;
     private Text charaLvlText;
     private void Awake()
@@ -199,7 +200,6 @@ public class PlayerController : MonoBehaviour {
                 // si j'arrive a l'xp max du slider 
                 if (expBar.value == expBar.maxValue)
                 {
-                    //Debug.Log("CA MARCHE");
                     levelCharacter += 1;
                     expBar.value = 0;
                     expBar.maxValue = expBar.maxValue * 1.5f;
@@ -244,11 +244,12 @@ public class PlayerController : MonoBehaviour {
                     }
                     charaLvlText.text = levelCharacter.ToString();
 
-
                 }
+                currentExp = expBar.value;
+
             }
 
-           
+
         }
     }
     
@@ -276,6 +277,7 @@ public class PlayerController : MonoBehaviour {
         {
         
             init();
+            expBar.value = currentExp;
 
         }
     }
@@ -303,6 +305,7 @@ public class PlayerController : MonoBehaviour {
         aS = barreAction.GetComponentsInChildren<AttaqueScript>();
         healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
         charaLvlText = GameObject.Find("CharaLevelText").GetComponent<Text>();
+
 
     }
 

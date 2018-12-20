@@ -32,10 +32,12 @@ public class PlayerHealth : MonoBehaviour {
         healthMax = startingHealth;
         //audio = GetComponent<AudioSource>();
         blood = GetComponentInChildren<ParticleSystem>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        healthSlider.value = currentHealth;
+
+    }
+
+    // Update is called once per frame
+    void Update () {
         timer += Time.deltaTime;
 	}
 

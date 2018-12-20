@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour {
     private float generatedSpawnTime = 1;
     private float currentSpawnTime = 0;
     private GameObject newEnemy;
+    private Transform playerSpawn;
 
     private List<EnemyHealth> enemies = new List<EnemyHealth>();
     private List<EnemyHealth> killedEnemies = new List<EnemyHealth>();
@@ -95,9 +96,9 @@ public class GameManager : MonoBehaviour {
 
     IEnumerator spawn()
     {
-        if (spawnPoints != null && tanker != null && ranger != null && soldier != null && levelText != null)
+        if (spawnPoint != null  && spawnPoint.Count != 0 && tanker != null && ranger != null && soldier != null && levelText != null)
         {
-
+            Debug.Log("spawn enum");
 
             if (currentSpawnTime > generatedSpawnTime)
             {
@@ -141,12 +142,13 @@ public class GameManager : MonoBehaviour {
     void OnLevelWasLoaded()
     {
         spawnPoint.Clear();
+        playerSpawn = GameObject.Find("PlayerSpawn").GetComponent<Transform>();
         if (player == null)
         {
             player = GameObject.FindWithTag("Player");
         }
         levelText = GameObject.Find("WaveText").GetComponent<Text>();
-        player.transform.position = new Vector3(60f, 0.1f, 50f);
+        player.transform.position = playerSpawn.transform.position ;//new Vector3(60f, 0.1f, 50f)
 
         Transform spawnPrt = GameObject.Find("SpawnMobs").GetComponent<Transform>();
         if(spawnPrt != null)
@@ -173,7 +175,7 @@ public class GameManager : MonoBehaviour {
 
         // get gameobject de soldier truc et muche
         //tanker = GameObject.Find();
-        currentLevel = 1;
+        currentLevel = 0;
 
         Debug.Log("nouvelle scene");
     }

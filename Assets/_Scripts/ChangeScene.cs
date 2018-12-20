@@ -9,4 +9,8 @@ public class ChangeScene : MonoBehaviour {
     {
         canvasBouton.SetActive(true);
     }
+    private void OnTriggerExit(Collider other)
+    {
+        canvasBouton.SetActive(false);
+    }
 }
