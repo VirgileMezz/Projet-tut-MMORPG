@@ -141,7 +141,7 @@ public class PlayerController : MonoBehaviour {
                         tmpsAvtProchaineAtq1 = Time.time + cooldown;
 
                         eHp.takeHit();
-                        augmentationExp();
+                        augmentationExp(eHp);
                         anim.Play("DoubleAttack");
                         
                     }
@@ -170,7 +170,7 @@ public class PlayerController : MonoBehaviour {
                     eHp.takeHit();
                     if (!eHp.IsAlive())
                     {
-                        augmentationExp();
+                        augmentationExp(eHp);
                         Debug.Log("adversaire tué avec aoe");
                     }
                     //augmentationExp();
@@ -182,72 +182,72 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    public void augmentationExp()
+    public void augmentationExp(EnemyHealth eHp)
     {
 
-        if(sc.getCible() != null)
+        //if(sc.getCible() != null)
+        //{
+
+        //GameObject cible = sc.getCible();
+        
+        if (!eHp.IsAlive())
         {
+            expAvantLvlUp = expBar.maxValue - expBar.value;
+            expBar.value += eHp.getExpGagnable();
 
-            //GameObject cible = sc.getCible();
-            EnemyHealth eHp = sc.getCible().GetComponent<EnemyHealth>();
-            if (!eHp.IsAlive())
+            //   Debug.Log("adversaire tué");
+
+            // si j'arrive a l'xp max du slider 
+            if (expBar.value == expBar.maxValue)
             {
-                expAvantLvlUp = expBar.maxValue - expBar.value;
-                expBar.value += eHp.getExpGagnable();
+                levelCharacter += 1;
+                expBar.value = 0;
+                expBar.maxValue = expBar.maxValue * 1.5f;
+                puissanceAttaque = puissanceAttaque * 1.5f;
+                playerHealth.setMaxVie(playerHealth.getMaxVie() + 20);  // j'up juste de 20 pv pour le moment
+                playerHealth.setCurrentHealth(playerHealth.getMaxVie()); // je remet la vie actuel au max 
 
-                //   Debug.Log("adversaire tué");
 
-                // si j'arrive a l'xp max du slider 
-                if (expBar.value == expBar.maxValue)
+                healthSlider.maxValue = playerHealth.getMaxVie();
+                healthSlider.value = healthSlider.maxValue;
+
+
+                // on gagne un niveau alors on up les stats
+                Debug.Log("exp avant lvl up "+expAvantLvlUp);
+                Debug.Log("exp gagné "+eHp.getExpGagnable());
+                Debug.Log(" valeur de la bar exp "+expBar.value);
+                expReste = eHp.getExpGagnable();
+                if (expAvantLvlUp < eHp.getExpGagnable())
                 {
-                    levelCharacter += 1;
-                    expBar.value = 0;
-                    expBar.maxValue = expBar.maxValue * 1.5f;
-                    puissanceAttaque = puissanceAttaque * 1.5f;
-                    playerHealth.setMaxVie(playerHealth.getMaxVie() + 20);  // j'up juste de 20 pv pour le moment
-                    playerHealth.setCurrentHealth(playerHealth.getMaxVie()); // je remet la vie actuel au max 
+                    expReste -= expAvantLvlUp;
+                    expBar.value += expReste;
 
-
-                    healthSlider.maxValue = playerHealth.getMaxVie();
-                    healthSlider.value = healthSlider.maxValue;
-
-
-                    // on gagne un niveau alors on up les stats
-                    Debug.Log("exp avant lvl up "+expAvantLvlUp);
-                    Debug.Log("exp gagné "+eHp.getExpGagnable());
-                    Debug.Log(" valeur de la bar exp "+expBar.value);
-                    expReste = eHp.getExpGagnable();
-                    if (expAvantLvlUp < eHp.getExpGagnable())
+                    Debug.Log("on rajoute l'exp restant");
+                    //expBar.value += eHp.getExpGagnable() - expAvantLvlUp ;
+                    /*while(expReste <= 0)
                     {
-                        expReste -= expAvantLvlUp;
+                        Debug.Log(" dans le while");
+                        expAvantLvlUp = expBar.maxValue - expBar.value;
                         expBar.value += expReste;
-
-                        Debug.Log("on rajoute l'exp restant");
-                        //expBar.value += eHp.getExpGagnable() - expAvantLvlUp ;
-                        /*while(expReste <= 0)
-                        {
-                            Debug.Log(" dans le while");
-                            expAvantLvlUp = expBar.maxValue - expBar.value;
-                            expBar.value += expReste;
-                            //expReste -= expAvantLvlUp;
-                            expReste -= 1;
+                        //expReste -= expAvantLvlUp;
+                        expReste -= 1;
 
 
 
-                            Debug.Log(" exp reste dans le while "+expReste);
-                            Debug.Log(" exp avant lvl up dans le while " + expAvantLvlUp);
+                        Debug.Log(" exp reste dans le while "+expReste);
+                        Debug.Log(" exp avant lvl up dans le while " + expAvantLvlUp);
 
-                            //expReste = 0;
+                        //expReste = 0;
 
-                        }*/
-
-                    }
-                    charaLvlText.text = levelCharacter.ToString();
+                    }*/
 
                 }
-                currentExp = expBar.value;
+                charaLvlText.text = levelCharacter.ToString();
 
             }
+            currentExp = expBar.value;
+
+            //}
 
 
         }
@@ -278,6 +278,9 @@ public class PlayerController : MonoBehaviour {
         
             init();
             expBar.value = currentExp;
+            healthSlider.maxValue = playerHealth.getMaxVie();
+            healthSlider.value = healthSlider.maxValue;
+            charaLvlText.text = levelCharacter.ToString();
 
         }
     }

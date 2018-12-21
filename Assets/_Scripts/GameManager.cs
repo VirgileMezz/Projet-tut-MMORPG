@@ -73,8 +73,8 @@ public class GameManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        currentLevel = 0;
         StartCoroutine(spawn());
-        currentLevel = 1;
         Debug.Log("game manager fonction start called");
 	}
 	
@@ -169,12 +169,8 @@ public class GameManager : MonoBehaviour {
             }
         }
         
-        //spawnPoints = GameObject.Find("SpawnMobs").GetComponentsInChildren<Transform>();
         Debug.Log(spawnPoint.Count);
-        //spawnPoints[1] = spawn.transform.GetChild(1).gameObject;
-
-        // get gameobject de soldier truc et muche
-        //tanker = GameObject.Find();
+      
         currentLevel = 0;
 
         Debug.Log("nouvelle scene");
