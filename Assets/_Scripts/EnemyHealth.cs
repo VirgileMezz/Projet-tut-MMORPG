@@ -8,6 +8,8 @@ public class EnemyHealth : MonoBehaviour {
     [SerializeField] private int startingHealth = 20;
     [SerializeField] private float timeSinceLastHit = 0.5f;
     [SerializeField] private float dissapearSpeed = 2f;
+    [SerializeField] private float expGagnable = 0.40f;
+
 
     //private AudioSource audio;
     private float timer = 0f;
@@ -17,19 +19,18 @@ public class EnemyHealth : MonoBehaviour {
     private Rigidbody rigidbody;
     private CapsuleCollider capsuleCollider;
     private bool dissapearEnemy = false;
-    private int currentHealth;   // trop de variableeeeeeeeeeeeeeeee
-
-
-    public bool IsAlive()
-    {
-        return isAlive; 
-    }
+    private float currentHealth;   // trop de variableeeeeeeeeeeeeeeee
+    private ParticleSystem blood;
+    private GameObject player;
+    private PlayerController pc;
+   
 
 
 
 	// Use this for initialization
 	void Start () {
 
+        GameManager.instance.RegisterEnemy(this);
         rigidbody = GetComponent<Rigidbody>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         nav = GetComponent<NavMeshAgent>();
@@ -37,6 +38,9 @@ public class EnemyHealth : MonoBehaviour {
         //audio = GetComponent<AudioSource>();
         isAlive = true;
         currentHealth = startingHealth;
+        blood = GetComponentInChildren<ParticleSystem>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        pc = player.GetComponent<PlayerController>();
 		
 	}
 	
@@ -56,20 +60,21 @@ public class EnemyHealth : MonoBehaviour {
         {
             if (other.tag == "PlayerWeapon")
             {
-                takeHit();
+                Debug.Log("touche arme");
                 timer = 0f;
             }
            
         }
     }
 
-    void takeHit()
+    public void takeHit()
     {
         if(currentHealth > 0)
         {
             //audio.PlayOneShot(audio.clip);
             anim.Play("Hurt");
-            currentHealth -= 10;
+            currentHealth -= pc.getPuissanceAttaque() ;
+            blood.Play();
         }
 
         if(currentHealth <= 0)
@@ -81,10 +86,12 @@ public class EnemyHealth : MonoBehaviour {
 
     void KillEnemy()
     {
+        GameManager.instance.KilledEnemy(this);
         capsuleCollider.enabled = false;
         nav.enabled = false;
         anim.SetTrigger("EnemyDie");
         rigidbody.isKinematic = true;
+        blood.Play();
 
         StartCoroutine(removeEnemy());
     }
@@ -99,5 +106,15 @@ public class EnemyHealth : MonoBehaviour {
 
     }
 
+   
 
+
+    public bool IsAlive()
+    {
+        return isAlive;
+    }
+    public float getExpGagnable()
+    {
+        return expGagnable;
+    }
 }

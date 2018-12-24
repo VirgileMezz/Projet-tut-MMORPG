@@ -13,7 +13,7 @@ public class SystemCiblage : MonoBehaviour {
     private bool canInstatiateEffect = true;
     // Use this for initialization
     void Start () {
-		
+        camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 	}
 	
 	// Update is called once per frame
@@ -29,6 +29,7 @@ public class SystemCiblage : MonoBehaviour {
                 {
                     Destroy(newEffect);
                     canInstatiateEffect = true;
+                    cible = null;
                     Debug.Log("marche");
                     cible = hit.collider.gameObject;
                     Debug.Log(cible);
@@ -43,14 +44,27 @@ public class SystemCiblage : MonoBehaviour {
                         }
                     }
                 }
-                else
-                {
-                    Destroy(newEffect);
-                    canInstatiateEffect = true;
-                    cible = null;
-
-                }
+               
             }
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Destroy(newEffect);
+            canInstatiateEffect = true;
+            cible = null;
+
+        }
+    }
+    public GameObject getCible()
+    {
+        return cible;
+    }
+    void OnLevelWasLoaded()
+    {
+        if (camera == null)
+        {
+            camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+
         }
     }
 }

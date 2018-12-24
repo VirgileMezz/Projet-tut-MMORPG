@@ -5,23 +5,25 @@ using UnityEngine;
 public class EnemyAttack : MonoBehaviour {
 
     [SerializeField] private float range = 3f;
-    [SerializeField] private float timeBetweenAttacks = 1f;
-    [SerializeField] private GameObject player;
+    [SerializeField] private float timeBetweenAttacks = 2f;
+    private GameObject player; //[SerializeField] 
 
+    // [SerializeField] Transform player;
 
+    private PlayerHealth pHP;
     private Animator anim;
     //private GameObject player;
     private bool playerInRange;
     private BoxCollider[] weaponColliders; // tableau pour les ennemies qui ont plusieurs armes
     private EnemyHealth enemyHealth;
-	// Use this for initialization
-	void Start () {
-
+    private float tmpsAvtProchaineAtq;
+    // Use this for initialization
+    void Start () {
         enemyHealth = GetComponent<EnemyHealth>();
         weaponColliders = GetComponentsInChildren<BoxCollider>();
-        //player = GameManager.instance.Player;
+        player = GameManager.instance.Player;
+        pHP = player.GetComponent<PlayerHealth>();
         anim = GetComponent<Animator>();
-        StartCoroutine(attack());
     }
 	
 	// Update is called once per frame
@@ -34,17 +36,18 @@ public class EnemyAttack : MonoBehaviour {
         {
             playerInRange = false;
         }
+        attack();
 	}
 
-    IEnumerator attack()
+    void attack()
     {
-        if(playerInRange && !GameManager.instance.GameOver)
+        if(playerInRange && !GameManager.instance.GameOver && tmpsAvtProchaineAtq <= Time.time)
         {
+            tmpsAvtProchaineAtq = Time.time + timeBetweenAttacks;
             anim.Play("Attack");
-            yield return new WaitForSeconds(timeBetweenAttacks);
+            pHP.takeHit();
+            Debug.Log("attaqueEnnemie");
         }
-        yield return null;
-        StartCoroutine(attack());
     }
 
     public void EnemyBeginAttack()
