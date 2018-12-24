@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour {
             move = vertical * playerFwd + horizontal * cam.right;
             //move = vertical * camForward + horizontal * cam.right;
             characterController.SimpleMove(move * moveSpeed);
-
+            
             // Pour l'anim
             if (move == Vector3.zero)
             {
@@ -275,15 +275,6 @@ public class PlayerController : MonoBehaviour {
 
     private void init()
     {
-        /*sc = gameObject.GetComponent<SystemCiblage>();
-        characterController = GetComponent<CharacterController>();
-        camera = GameObject.FindGameObjectWithTag("MainCamera");
-        cam = camera.transform;
-        anim = GetComponent<Animator>();
-        swordColliders = GetComponentsInChildren<BoxCollider>();
-        expBar = GameObject.Find("ExpBar").GetComponent<Slider>();
-        barreAction = GameObject.Find("BarreAction");
-        aS = barreAction.GetComponentsInChildren<AttaqueScript>();*/
         sc = gameObject.GetComponent<SystemCiblage>();
         characterController = GetComponent<CharacterController>();
         playerHealth = gameObject.GetComponent<PlayerHealth>();

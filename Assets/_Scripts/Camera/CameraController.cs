@@ -43,7 +43,6 @@ public class CameraController : MonoBehaviour {
         distanceActuelle = distance;
         distanceCorrige = distance;
         distanceVoulue = distance;
-
     }
 
     
@@ -118,6 +117,14 @@ public class CameraController : MonoBehaviour {
         yDeg = Mathf.Clamp(angle, -60, 80);
     }
 
-   
+
+    public float getVitesse()
+    {
+        return this.vitesse;
+    }
+    public void setVitesse(float vit)
+    {
+        this.vitesse = vit;
+    }
 }
 
