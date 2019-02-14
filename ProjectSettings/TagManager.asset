@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - PlayerWeapon
   - draggable
+  - HealthBonus
+  - SpeedBonus
   layers:
   - Default
   - TransparentFX

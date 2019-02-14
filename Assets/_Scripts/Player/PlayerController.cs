@@ -240,6 +240,16 @@ public class PlayerController : MonoBehaviour {
 
         }
     }
+
+    public void healthBonus()
+    {
+        playerHealth.setCurrentHealth(playerHealth.getCurrentHealth()+ (playerHealth.getMaxVie()/4));
+        if(playerHealth.getCurrentHealth()> playerHealth.getMaxVie())
+        {
+            playerHealth.setCurrentHealth(playerHealth.getMaxVie());
+        }
+        healthSlider.value = playerHealth.getCurrentHealth();
+    }
     
     public void BeginAttack()
     {

@@ -4,13 +4,27 @@ using UnityEngine;
 
 public class PickableObjectScript : MonoBehaviour {
 
+    private PlayerController pc;
 	// Use this for initialization
 	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        pc = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            if (gameObject.tag == "HealthBonus")
+            {
+                pc.healthBonus();
+            }
+            if(gameObject.tag == "SpeedBonus")
+            {
+
+            }
+            Destroy(gameObject);
+        }
+        
+    }
 }
