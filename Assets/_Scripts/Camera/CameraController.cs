@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class CameraController : MonoBehaviour {
+public class CameraController : NetworkBehaviour {
 
     // changer angle du model avec right clic
 
@@ -33,9 +34,15 @@ public class CameraController : MonoBehaviour {
     private Transform playerPos;
 
 
+    private GameObject parent;
+
+
     public void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+       // parent = transform.parent;
+
+        //  player = GameObject.FindGameObjectWithTag("test");
+        player = transform.parent.gameObject;
         cible = player.transform;
         Vector3 angle = transform.eulerAngles;
         xDeg = angle.x;
@@ -45,7 +52,33 @@ public class CameraController : MonoBehaviour {
         distanceVoulue = distance;
     }
 
-    
+    public void Update()
+    {
+
+      
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+
+      
+
+        if (player == null)
+        {
+            player = transform.parent.gameObject;
+            cible = player.transform;
+            Vector3 angle = transform.eulerAngles;
+            xDeg = angle.x;
+            yDeg = angle.y;
+            distanceActuelle = distance;
+            distanceCorrige = distance;
+            distanceVoulue = distance;
+        }
+       
+       
+    }
+
+
     public void LateUpdate()
     {
         if (!cible)

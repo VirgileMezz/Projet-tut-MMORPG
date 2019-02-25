@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : NetworkBehaviour {
     [SerializeField] private float moveSpeed = 10.0f;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private GameObject camera;
@@ -53,7 +54,8 @@ public class PlayerController : MonoBehaviour {
         sc = gameObject.GetComponent<SystemCiblage>();
         characterController = GetComponent<CharacterController>();
         playerHealth = gameObject.GetComponent<PlayerHealth>();
-        camera = GameObject.FindGameObjectWithTag("MainCamera");
+       // camera = GameObject.FindGameObjectWithTag("MainCamera");
+        camera = gameObject.transform.Find("Camera").GetComponentInChildren<Camera>().gameObject;
         cam = camera.transform;
         anim = GetComponent<Animator>();
         swordColliders = GetComponentsInChildren<BoxCollider>();
@@ -64,11 +66,36 @@ public class PlayerController : MonoBehaviour {
         healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
         charaLvlText = GameObject.Find("CharaLevelText").GetComponent<Text>();
 
+     
+
 
     }
 
+
+
     // Update is called once per frame
     void Update() {
+
+        if (isLocalPlayer)
+        {
+            camera.SetActive(true);
+        }
+        else
+        {
+            camera.SetActive(false);
+        }
+
+
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+
+     
+
+
+
+
         camForward = Vector3.Scale(cam.forward, new Vector3(1, 0, 1)).normalized;
         playerFwd = Vector3.Scale(transform.forward, new Vector3(1, 0, 1)).normalized;
 
@@ -78,8 +105,8 @@ public class PlayerController : MonoBehaviour {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         //test
-        if (!GameManager.instance.GameOver)
-        {
+    //    if (!GameManager.instance.GameOver)
+       // {
             //fin test
             //transform.rotation = Quaternion.LookRotation(moveDirection);
             move = vertical * playerFwd + horizontal * cam.right;
@@ -98,7 +125,7 @@ public class PlayerController : MonoBehaviour {
 
            
 
-        }
+      //  }
     }
 
 
@@ -288,7 +315,8 @@ public class PlayerController : MonoBehaviour {
         sc = gameObject.GetComponent<SystemCiblage>();
         characterController = GetComponent<CharacterController>();
         playerHealth = gameObject.GetComponent<PlayerHealth>();
-        camera = GameObject.FindGameObjectWithTag("MainCamera");
+        //   camera = GameObject.FindGameObjectWithTag("MainCamera");
+        camera = gameObject.transform.Find("Camera").GetComponentInChildren<Camera>().gameObject;
         cam = camera.transform;
         anim = GetComponent<Animator>();
         swordColliders = GetComponentsInChildren<BoxCollider>();

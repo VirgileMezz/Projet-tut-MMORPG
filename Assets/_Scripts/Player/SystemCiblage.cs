@@ -13,8 +13,8 @@ public class SystemCiblage : MonoBehaviour {
     private bool canInstatiateEffect = true;
     // Use this for initialization
     void Start () {
-        camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-	}
+        camera = gameObject.transform.Find("Camera").GetComponentInChildren<Camera>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
