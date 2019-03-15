@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour {
     [SerializeField] private Text MaxHpTxt;
 
     private GameObject pausePanel;
+    private GameObject spellPanel;
 
     private void Start()
     {
@@ -18,6 +19,8 @@ public class GameController : MonoBehaviour {
         pHP = player.GetComponent<PlayerHealth>();
         pausePanel = GameObject.Find("PauseMenuPanel");
         pausePanel.SetActive(false);
+        spellPanel = GameObject.Find("SpellPanel");
+        spellPanel.SetActive(false);
         //curHpTxt = GetComponent<Text>();
         //MaxHpTxt = GetComponent<Text>();
 
@@ -26,14 +29,22 @@ public class GameController : MonoBehaviour {
     void Update () {
         MaxHpTxt.text = pHP.getMaxVie().ToString();
         curHpTxt.text = pHP.getCurrentHealth().ToString();
-        pauseMenu();
+        PauseMenu();
+        SpellActive();
     }
 
-    public void pauseMenu()
+    public void PauseMenu()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             pausePanel.SetActive(!pausePanel.activeSelf);
+        }
+    }
+    public void SpellActive()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            spellPanel.SetActive(!spellPanel.activeSelf);
         }
     }
 }
