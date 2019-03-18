@@ -10,6 +10,7 @@ TagManager:
   - draggable
   - HealthBonus
   - SpeedBonus
+  - SpellSlot
   layers:
   - Default
   - TransparentFX
