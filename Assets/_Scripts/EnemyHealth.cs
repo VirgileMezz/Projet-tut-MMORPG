@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour {
 
@@ -23,12 +24,14 @@ public class EnemyHealth : MonoBehaviour {
     private ParticleSystem blood;
     private GameObject player;
     private PlayerController pc;
-   
+
+    private Slider enemySlider;
+    private Text curHpTxt;
+    private Text MaxHpTxt;
 
 
-
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 
         GameManager.instance.RegisterEnemy(this);
         rigidbody = GetComponent<Rigidbody>();
@@ -41,8 +44,17 @@ public class EnemyHealth : MonoBehaviour {
         blood = GetComponentInChildren<ParticleSystem>();
         player = GameObject.FindGameObjectWithTag("Player");
         pc = player.GetComponent<PlayerController>();
-		
-	}
+
+        curHpTxt = transform.Find("CanvasHealthEnemy/EnemyHealthSlider/lifeStatsCanvas/CurrentLifeText").GetComponent<Text>();
+        MaxHpTxt = transform.Find("CanvasHealthEnemy/EnemyHealthSlider/lifeStatsCanvas/MaxLifeText").GetComponent<Text>();
+        MaxHpTxt.text = startingHealth.ToString();
+        curHpTxt.text = currentHealth.ToString();
+        enemySlider = transform.Find("CanvasHealthEnemy/EnemyHealthSlider").GetComponent<Slider>();
+        enemySlider.maxValue = startingHealth;
+        enemySlider.value = startingHealth;
+
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -79,9 +91,14 @@ public class EnemyHealth : MonoBehaviour {
 
         if(currentHealth <= 0)
         {
+            enemySlider.gameObject.SetActive(false);
             isAlive = false;
             KillEnemy();
         }
+        enemySlider.value = currentHealth;
+        curHpTxt.text = currentHealth.ToString();
+
+
     }
 
     void KillEnemy()
