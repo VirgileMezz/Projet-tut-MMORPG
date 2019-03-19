@@ -8,9 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e64c463a92514a7f942019f37b16327a, type: 3}
+  m_Script: {fileID: 11500000, guid: 565bfa4a82f240ce8906ad00b74f8128, type: 3}
   m_Name: Casque
   m_EditorClassIdentifier: 
-  name: Casque de protection
+  name: Casque
   icon: {fileID: 21300000, guid: e7a6c6aa8c0821848a316e855b8c3436, type: 3}
   isDefaultItem: 0

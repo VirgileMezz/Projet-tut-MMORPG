@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 
 public class PlayerController : MonoBehaviour {
@@ -43,6 +44,10 @@ public class PlayerController : MonoBehaviour {
     private float currentExp;
     private float puissanceAttaque = 10;
     private Text charaLvlText;
+
+    private Camera camera1;
+    public Interactable focus;
+    
     private void Awake()
     {
       DontDestroyOnLoad(gameObject);
@@ -63,12 +68,18 @@ public class PlayerController : MonoBehaviour {
         //aS1 = GameObject.Find("ActionButton1").GetComponent<AttaqueScript>();
         healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
         charaLvlText = GameObject.Find("CharaLevelText").GetComponent<Text>();
-
+        camera1 = Camera.main;
 
     }
 
     // Update is called once per frame
     void Update() {
+
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+        
         camForward = Vector3.Scale(cam.forward, new Vector3(1, 0, 1)).normalized;
         playerFwd = Vector3.Scale(transform.forward, new Vector3(1, 0, 1)).normalized;
 
@@ -95,13 +106,57 @@ public class PlayerController : MonoBehaviour {
             {
                 anim.SetBool("IsWalking", true);
             }
+        }
 
-           
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = camera1.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
+            if (Physics.Raycast(ray, out hit, 100))
+            {
+                RemoveFocus();
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            Ray ray = camera1.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 100))
+            {
+                Interactable interactable = hit.collider.GetComponent<Interactable>();
+                if (interactable != null)
+                {
+                    SetFocus(interactable);
+                }
+            }
         }
     }
 
+    void SetFocus(Interactable newFocus)
+    {
+        if (newFocus != focus)
+        {
+            if (focus != null)
+            {
+                focus.OnDefocused();
+            }
+            focus = newFocus;
+        }
 
+        newFocus.OnFocused(transform);
+    }
+
+    void RemoveFocus()
+    {
+        if (focus != null)
+        {
+            focus.OnDefocused();
+        }
+        focus = null;
+    }
 
     public void doubleAttaque()
     {

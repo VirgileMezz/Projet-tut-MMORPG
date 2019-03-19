@@ -19,21 +19,41 @@
           <e p="EnemyMove.cs" t="Include" />
           <e p="GameController.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
+          <e p="Interactable.cs" t="Include" />
+          <e p="Inventory" t="Include">
+            <e p="Inventory.cs" t="Include" />
+            <e p="InventorySlot.cs" t="Include" />
+            <e p="InventoryUI.cs" t="Include" />
+          </e>
+          <e p="Items" t="Include">
+            <e p="Item.cs" t="Include" />
+            <e p="ItemPickup.cs" t="Include" />
+          </e>
           <e p="PickableObjectScript.cs" t="Include" />
           <e p="Player" t="Include">
             <e p="PlayerController.cs" t="Include" />
             <e p="SystemCiblage.cs" t="Include" />
           </e>
           <e p="PlayerHealth.cs" t="Include" />
+          <e p="PNJ" t="Include">
+            <e p="Dialog.cs" t="Include" />
+            <e p="DialogLauncher.cs" t="Include" />
+          </e>
           <e p="SoundOption.cs" t="Include" />
           <e p="Teleporteur.cs" t="Include" />
           <e p="Ui" t="Include">
             <e p="AttaqueScript.cs" t="Include" />
             <e p="BarActionPanelEmplacementScript.cs" t="Include" />
             <e p="DragUi.cs" t="Include" />
+            <e p="DropZone.cs" t="Include" />
             <e p="SensiSliderScript.cs" t="Include" />
             <e p="UiController.cs" t="Include" />
           </e>
+        </e>
+        <e p="Dialog" t="Include">
+          <e p="archer.txt" t="Include" />
+          <e p="warrior.txt" t="Include" />
+          <e p="wizard.txt" t="Include" />
         </e>
         <e p="Imported assets" t="Include">
           <e p="ProCore" t="Include">
