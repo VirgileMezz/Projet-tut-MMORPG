@@ -7,11 +7,7 @@ using UnityEngine.EventSystems;
 public class DropZone : MonoBehaviour, IDropHandler
 {
 
-    public bool keepObject = false;
-    private void Start()
-    {
-       
-    }
+    
 
     public GameObject ObjectDragged
     {
