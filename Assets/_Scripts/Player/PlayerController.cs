@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour {
         //aS1 = GameObject.Find("ActionButton1").GetComponent<AttaqueScript>();
         healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
         charaLvlText = GameObject.Find("CharaLevelText").GetComponent<Text>();
-        camera1 = Camera.main;
+        camera1 = camera.GetComponent<Camera>() ;
 
     }
 
@@ -352,6 +352,7 @@ public class PlayerController : MonoBehaviour {
         aS = barreAction.GetComponentsInChildren<AttaqueScript>();
         healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
         charaLvlText = GameObject.Find("CharaLevelText").GetComponent<Text>();
+        camera1 = camera.GetComponent<Camera>();
 
 
     }

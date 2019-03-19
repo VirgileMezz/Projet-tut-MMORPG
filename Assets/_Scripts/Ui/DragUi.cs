@@ -20,7 +20,6 @@ public class DragUi : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         //{
         if (transform.parent.gameObject.tag == "SpellSlot")
         {
-            print("iauzuie");
             keepObject = true;
         }
         startParent = transform.parent;
@@ -35,6 +34,7 @@ public class DragUi : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         if (keepObject)
         {
             clone = Instantiate(gameObject,startParent);
+            clone.name = gameObject.name;
             keepObject = false;
         }
        
@@ -56,9 +56,11 @@ public class DragUi : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         objectDragged = null;
         if (transform.parent == startParent || transform.parent == transform.root)
         {
-            transform.position = startPosition;
-            transform.SetParent(startParent);
+            //transform.position = startPosition;
+            //transform.SetParent(startParent);
+            Destroy(gameObject);
         }
+        
         GetComponent<CanvasGroup>().blocksRaycasts = true;
 
     }
