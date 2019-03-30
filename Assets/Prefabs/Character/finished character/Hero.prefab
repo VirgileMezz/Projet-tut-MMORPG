@@ -2466,6 +2466,7 @@ MonoBehaviour:
   particleSpinAttaque: {fileID: 1430385759361938, guid: 9c44d5974dfdbac4b8e83df627c6a780,
     type: 2}
   healthSlider: {fileID: 0}
+  focus: {fileID: 0}
 --- !u!137 &137092908689579986
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

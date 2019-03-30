@@ -79,13 +79,13 @@ public class EnemyHealth : MonoBehaviour {
         }
     }
 
-    public void takeHit()
+    public void takeHit(float multilplier)
     {
         if(currentHealth > 0)
         {
             //audio.PlayOneShot(audio.clip);
             anim.Play("Hurt");
-            currentHealth -= pc.getPuissanceAttaque() ;
+            currentHealth -= pc.getPuissanceAttaque()*multilplier ;
             blood.Play();
         }
 

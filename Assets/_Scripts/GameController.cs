@@ -13,6 +13,11 @@ public class GameController : MonoBehaviour {
     private GameObject pausePanel;
     private GameObject spellPanel;
 
+     private void Awake()
+    {
+      DontDestroyOnLoad(gameObject);
+    }
+    
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");

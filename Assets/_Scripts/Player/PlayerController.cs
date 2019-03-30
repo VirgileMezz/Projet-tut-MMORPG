@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour {
 
     private float tmpsAvtProchaineAtq1;
     private float tmpsAvtProchaineAtq2;
+    private float tmpsAvtAutoAtck;
+
     //private float expGagne = 0.40f;
 
     private int levelCharacter = 1;
@@ -75,10 +77,10 @@ public class PlayerController : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-        if (EventSystem.current.IsPointerOverGameObject())
+        /*if (EventSystem.current.IsPointerOverGameObject())
         {
             return;
-        }
+        }*/
         
         camForward = Vector3.Scale(cam.forward, new Vector3(1, 0, 1)).normalized;
         playerFwd = Vector3.Scale(transform.forward, new Vector3(1, 0, 1)).normalized;
@@ -106,33 +108,40 @@ public class PlayerController : MonoBehaviour {
             {
                 anim.SetBool("IsWalking", true);
             }
-        }
 
-        if (Input.GetMouseButtonDown(0))
-        {
+
+
+            if (Input.GetMouseButtonDown(0))
+            {
             Ray ray = camera1.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, 100))
-            {
-                RemoveFocus();
-            }
-        }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            Ray ray = camera1.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, 100))
-            {
-                Interactable interactable = hit.collider.GetComponent<Interactable>();
-                if (interactable != null)
+                if (Physics.Raycast(ray, out hit, 100))
                 {
-                    SetFocus(interactable);
+                    RemoveFocus();
                 }
             }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                Ray ray = camera1.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, 100))
+                {
+                    Interactable interactable = hit.collider.GetComponent<Interactable>();
+                    if (interactable != null)
+                    {
+                        SetFocus(interactable);
+                    }
+                }
+            }
+
+            autoAttaque();
+
         }
+
+        
     }
 
     void SetFocus(Interactable newFocus)
@@ -183,7 +192,7 @@ public class PlayerController : MonoBehaviour {
                     {
                         tmpsAvtProchaineAtq1 = Time.time + cooldown;
 
-                        eHp.takeHit();
+                        eHp.takeHit(1.5f);
                         augmentationExp(eHp);
                         anim.Play("DoubleAttack");
                         
@@ -192,6 +201,33 @@ public class PlayerController : MonoBehaviour {
                 }
 
             }
+
+        }
+    }
+
+     public void autoAttaque()
+    {
+        if (sc.getCible() != null)
+        {
+            //print("blabla1");
+            RaycastHit hit;
+            GameObject cible = sc.getCible();
+            EnemyHealth eHp = cible.GetComponent<EnemyHealth>();
+            float cooldown = 1.0f;
+            if(Physics.Raycast(transform.position,(sc.getCible().transform.position-transform.position), out hit , 4f) && eHp.IsAlive())
+            {
+                //print("bla2");
+
+                if (tmpsAvtAutoAtck<= Time.time)
+                {
+                    tmpsAvtAutoAtck = Time.time + cooldown;
+
+                    eHp.takeHit(1f);
+                    augmentationExp(eHp);
+                    anim.Play("Hero_autoAttaque");
+
+                }
+            }             
 
         }
     }
@@ -210,7 +246,7 @@ public class PlayerController : MonoBehaviour {
                 {
 
                     EnemyHealth eHp = hitColliders[i].gameObject.GetComponent<EnemyHealth>();
-                    eHp.takeHit();
+                    eHp.takeHit(1.25f);
                     if (!eHp.IsAlive())
                     {
                         augmentationExp(eHp);
@@ -238,7 +274,7 @@ public class PlayerController : MonoBehaviour {
             expAvantLvlUp = expBar.maxValue - expBar.value;
             expBar.value += eHp.getExpGagnable();
 
-            //   Debug.Log("adversaire tué");
+            Debug.Log("adversaire tué");
 
             // si j'arrive a l'xp max du slider 
             if (expBar.value == expBar.maxValue)
@@ -326,16 +362,16 @@ public class PlayerController : MonoBehaviour {
 
     void OnLevelWasLoaded()
     {
-        if(camera == null)
-        {
+        //if(camera == null)
+        //{
         
-            init();
-            expBar.value = currentExp;
-            healthSlider.maxValue = playerHealth.getMaxVie();
-            healthSlider.value = healthSlider.maxValue;
-            charaLvlText.text = levelCharacter.ToString();
+        init();
+        expBar.value = currentExp;
+        healthSlider.maxValue = playerHealth.getMaxVie();
+        healthSlider.value = healthSlider.maxValue;
+        charaLvlText.text = levelCharacter.ToString();
 
-        }
+        //}
     }
 
     private void init()
