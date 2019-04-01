@@ -52838,16 +52838,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 114926089045108168, guid: c7862107dc0b5a0488930c274c72656b,
-        type: 2}
-      propertyPath: camera
-      value: 
-      objectReference: {fileID: 809376825}
     - target: {fileID: 114187554770080756, guid: c7862107dc0b5a0488930c274c72656b,
         type: 2}
       propertyPath: camera
       value: 
       objectReference: {fileID: 809376826}
+    - target: {fileID: 114926089045108168, guid: c7862107dc0b5a0488930c274c72656b,
+        type: 2}
+      propertyPath: camera
+      value: 
+      objectReference: {fileID: 809376825}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7862107dc0b5a0488930c274c72656b, type: 2}
   m_IsPrefabAsset: 0
