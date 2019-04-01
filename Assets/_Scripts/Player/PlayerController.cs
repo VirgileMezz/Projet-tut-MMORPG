@@ -95,7 +95,8 @@ public class PlayerController : MonoBehaviour {
         {
             return;
         }*/
-        
+        //print(textGold);
+
         camForward = Vector3.Scale(cam.forward, new Vector3(1, 0, 1)).normalized;
         playerFwd = Vector3.Scale(transform.forward, new Vector3(1, 0, 1)).normalized;
 

@@ -32,7 +32,10 @@ public class CameraController : MonoBehaviour {
     [SerializeField] private GameObject player;
     private Transform playerPos;
 
-
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     public void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");

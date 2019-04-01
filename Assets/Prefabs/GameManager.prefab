@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4955740189410778}
   - component: {fileID: 114304882675657476}
+  - component: {fileID: 114435884252420644}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -53,7 +54,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   spawnPoints: []
+  spawnPoint: []
   tanker: {fileID: 1299252765867688, guid: 81819edb26f8fad42b076637c6976ccc, type: 2}
   ranger: {fileID: 1966730148666400, guid: 9964488392ef69741ab011e17894049c, type: 2}
   soldier: {fileID: 1789329980850436, guid: 1f9fa0f4eca0e9e48aa40950e7964afe, type: 2}
   levelText: {fileID: 0}
+--- !u!114 &114435884252420644
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1008796320643986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 551942a873204b3dbd40c3330de4a3b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items: []
+  space: 20

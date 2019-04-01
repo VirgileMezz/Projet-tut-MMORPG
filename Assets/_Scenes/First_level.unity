@@ -573,7 +573,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1718,7 +1718,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Aller \xE0 l'ar\xE8ne"
+  m_Text: retourner au village
 --- !u!222 &1575099887
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1811,6 +1811,10 @@ Prefab:
     - target: {fileID: 4962141997199506, guid: 5fa3774d0d877e042994894f08dc6afa, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1657262559539186, guid: 5fa3774d0d877e042994894f08dc6afa, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fa3774d0d877e042994894f08dc6afa, type: 2}

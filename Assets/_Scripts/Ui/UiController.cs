@@ -4,8 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class UiController : MonoBehaviour {
-
-	public void loadSceneOnClic(int index)
+    [SerializeField] private GameObject HUD;
+    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject Camera;
+    [SerializeField] private GameObject GameController;
+    [SerializeField] private GameObject GameManager;
+    public void loadSceneOnClic(int index)
     {
         SceneManager.LoadScene(index, LoadSceneMode.Single);
     }
@@ -20,5 +24,17 @@ public class UiController : MonoBehaviour {
     public void activateCanvasOnClic(GameObject o)
     {
         o.SetActive(true);
+    }
+    public void PlayerInstanciate()
+    {
+        if (HUD != null && player != null && Camera != null && GameController != null && GameManager != null)
+        {
+            Instantiate(HUD);
+            Instantiate(player);
+            Instantiate(Camera);
+            Instantiate(GameController);
+            Instantiate(GameManager);
+        }
+
     }
 }
