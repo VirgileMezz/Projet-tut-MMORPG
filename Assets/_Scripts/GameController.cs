@@ -26,8 +26,8 @@ public class GameController : MonoBehaviour {
         pausePanel.SetActive(false);
         spellPanel = GameObject.Find("SpellPanel");
         spellPanel.SetActive(false);
-        //curHpTxt = GetComponent<Text>();
-        //MaxHpTxt = GetComponent<Text>();
+        curHpTxt = GameObject.Find("CurrentLifeText").GetComponent<Text>();
+        MaxHpTxt = GameObject.Find("MaxLifeText").GetComponent<Text>();
 
     }
     // Update is called once per frame

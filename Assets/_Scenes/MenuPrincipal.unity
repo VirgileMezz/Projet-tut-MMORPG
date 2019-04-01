@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -398,6 +398,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a5701734d12ea64cab73d6b504640c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HUD: {fileID: 0}
+  player: {fileID: 0}
+  Camera: {fileID: 0}
+  GameController: {fileID: 0}
+  GameManager: {fileID: 0}
 --- !u!114 &163414247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1475,6 +1480,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a5701734d12ea64cab73d6b504640c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HUD: {fileID: 1912346562413410, guid: bd8d4006a4979b84d8120a08798d89e9, type: 2}
+  player: {fileID: 1890826601384506, guid: c7862107dc0b5a0488930c274c72656b, type: 2}
+  Camera: {fileID: 1657262559539186, guid: 5fa3774d0d877e042994894f08dc6afa, type: 2}
+  GameController: {fileID: 1194181524249228, guid: c423bb8570fa267498c4f870de09c49c,
+    type: 2}
+  GameManager: {fileID: 1008796320643986, guid: edb547757b188114fac24509c0520d88,
+    type: 2}
 --- !u!114 &976824447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1521,6 +1533,17 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 976824446}
+        m_MethodName: PlayerInstanciate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1798,6 +1821,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a5701734d12ea64cab73d6b504640c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HUD: {fileID: 0}
+  player: {fileID: 0}
+  Camera: {fileID: 0}
+  GameController: {fileID: 0}
+  GameManager: {fileID: 0}
 --- !u!114 &1161241113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1944,6 +1972,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a5701734d12ea64cab73d6b504640c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HUD: {fileID: 0}
+  player: {fileID: 0}
+  Camera: {fileID: 0}
+  GameController: {fileID: 0}
+  GameManager: {fileID: 0}
 --- !u!114 &1164307014
 MonoBehaviour:
   m_ObjectHideFlags: 0
