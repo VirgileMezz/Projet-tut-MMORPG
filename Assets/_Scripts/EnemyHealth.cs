@@ -10,7 +10,7 @@ public class EnemyHealth : MonoBehaviour {
     [SerializeField] private float timeSinceLastHit = 0.5f;
     [SerializeField] private float dissapearSpeed = 2f;
     [SerializeField] private float expGagnable = 0.40f;
-
+    [SerializeField] private int moneyGains = 500;
 
     //private AudioSource audio;
     private float timer = 0f;
@@ -133,5 +133,9 @@ public class EnemyHealth : MonoBehaviour {
     public float getExpGagnable()
     {
         return expGagnable;
+    }
+    public int getMoney()
+    {
+        return moneyGains;
     }
 }
