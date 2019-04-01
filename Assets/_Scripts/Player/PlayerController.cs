@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour {
 
     private Camera camera1;
     public Interactable focus;
+    QuestScript qs = new QuestScript();
     
     private void Awake()
     {
@@ -288,6 +289,16 @@ public class PlayerController : MonoBehaviour {
         
         if (!eHp.IsAlive())
         {
+            if (eHp.Boss())
+            {
+                Debug.Log("Boss tué!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                qs.ActivateQuest();
+
+            }
+            else
+            {
+                Debug.Log("Enemy normal tué");
+            }
             expAvantLvlUp = expBar.maxValue - expBar.value;
             expBar.value += eHp.getExpGagnable();
 
@@ -296,6 +307,8 @@ public class PlayerController : MonoBehaviour {
             // si j'arrive a l'xp max du slider 
             if (expBar.value == expBar.maxValue)
             {
+               
+
                 levelCharacter += 1;
                 expBar.value = 0;
                 expBar.maxValue = expBar.maxValue * 1.5f;

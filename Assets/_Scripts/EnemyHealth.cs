@@ -11,6 +11,7 @@ public class EnemyHealth : MonoBehaviour {
     [SerializeField] private float dissapearSpeed = 2f;
     [SerializeField] private float expGagnable = 0.40f;
     [SerializeField] private int moneyGains = 500;
+    [SerializeField] private bool isBoss;
 
     //private AudioSource audio;
     private float timer = 0f;
@@ -78,6 +79,8 @@ public class EnemyHealth : MonoBehaviour {
            
         }
     }
+
+    public bool Boss() { return this.isBoss; }
 
     public void takeHit(float multilplier)
     {

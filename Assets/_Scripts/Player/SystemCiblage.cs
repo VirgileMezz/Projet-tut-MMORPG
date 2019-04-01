@@ -25,7 +25,7 @@ public class SystemCiblage : MonoBehaviour {
         {
             if(Physics.Raycast(ray, out hit,range))
             {
-                if (hit.collider.tag == "Enemy")
+                if (hit.collider.tag == "Enemy" || hit.collider.tag =="Boss")
                 {
                     Destroy(newEffect);
                     canInstatiateEffect = true;
