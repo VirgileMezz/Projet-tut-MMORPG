@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Networking;
 
 
 public class PlayerController : MonoBehaviour {
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private GameObject camera;
     [SerializeField] private PlayerHealth playerHealth;
+    [SerializeField] int startMoney = 1000;
 
     private CharacterController characterController;
     private Vector3 currentLookTarget = Vector3.zero;
@@ -17,6 +19,9 @@ public class PlayerController : MonoBehaviour {
     private Vector3 camForward;
     private Vector3 move;
 
+    
+    private int moneyGain;
+	
     private Vector3 playerFwd;
 
     private Animator anim;
@@ -35,11 +40,15 @@ public class PlayerController : MonoBehaviour {
 
     private bool canGainExp;
     private Slider expBar;
+   
 
     private AttaqueScript[] aS;
     private GameObject barreAction;
     [SerializeField] private GameObject particleSpinAttaque;
     [SerializeField] Slider healthSlider;
+
+   
+    private Text textGold;
 
     private float expAvantLvlUp;
     private float expReste;
@@ -55,8 +64,10 @@ public class PlayerController : MonoBehaviour {
       DontDestroyOnLoad(gameObject);
     }
 
-    void Start() {
+    void Start()
+    {
 
+        moneyGain = startMoney;
         sc = gameObject.GetComponent<SystemCiblage>();
         characterController = GetComponent<CharacterController>();
         playerHealth = gameObject.GetComponent<PlayerHealth>();
@@ -65,12 +76,15 @@ public class PlayerController : MonoBehaviour {
         anim = GetComponent<Animator>();
         swordColliders = GetComponentsInChildren<BoxCollider>();
         expBar = GameObject.Find("ExpBar").GetComponent<Slider>();
+        textGold = GameObject.Find("Gold").GetComponent<Text>();
+        textGold.text = "Gain : "+getMoney();
         barreAction = GameObject.Find("BarreAction");
         aS = barreAction.GetComponentsInChildren<AttaqueScript>();
         //aS1 = GameObject.Find("ActionButton1").GetComponent<AttaqueScript>();
         healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
         charaLvlText = GameObject.Find("CharaLevelText").GetComponent<Text>();
         camera1 = camera.GetComponent<Camera>() ;
+        
 
     }
 
@@ -194,6 +208,7 @@ public class PlayerController : MonoBehaviour {
 
                         eHp.takeHit(1.5f);
                         augmentationExp(eHp);
+                        augmentationMoney(eHp);
                         anim.Play("DoubleAttack");
                         
                     }
@@ -224,6 +239,7 @@ public class PlayerController : MonoBehaviour {
 
                     eHp.takeHit(1f);
                     augmentationExp(eHp);
+                    augmentationMoney(eHp);
                     anim.Play("Hero_autoAttaque");
 
                 }
@@ -250,6 +266,7 @@ public class PlayerController : MonoBehaviour {
                     if (!eHp.IsAlive())
                     {
                         augmentationExp(eHp);
+                        augmentationMoney(eHp);
                         Debug.Log("adversaire tué avec aoe");
                     }
                     //augmentationExp();
@@ -332,6 +349,22 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+
+    public void augmentationMoney(EnemyHealth eHp)
+    {
+
+        if (!eHp.IsAlive())
+        {
+            moneyGain += eHp.getMoney();
+            textGold.text = "Gain : "+moneyGain;
+          
+            Debug.Log("adversaire tué, argent gagné");
+
+        }
+    }
+
+
+
     public void healthBonus()
     {
         playerHealth.setCurrentHealth(playerHealth.getCurrentHealth()+ (playerHealth.getMaxVie()/4));
@@ -396,5 +429,10 @@ public class PlayerController : MonoBehaviour {
     public float getPuissanceAttaque()
     {
         return puissanceAttaque;
+    }
+    
+    public int getMoney()
+    {
+        return moneyGain;
     }
 }
