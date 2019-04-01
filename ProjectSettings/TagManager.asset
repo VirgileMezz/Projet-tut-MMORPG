@@ -11,6 +11,7 @@ TagManager:
   - HealthBonus
   - SpeedBonus
   - SpellSlot
+  - Boss
   layers:
   - Default
   - TransparentFX
