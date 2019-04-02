@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour {
 
     private Camera camera1;
     public Interactable focus;
-    QuestScript qs = new QuestScript();
+    //QuestScript qs = new QuestScript();
     
     private void Awake()
     {
@@ -290,7 +290,7 @@ public class PlayerController : MonoBehaviour {
         
         if (!eHp.IsAlive())
         {
-            if (eHp.Boss())
+            /*if (eHp.Boss())
             {
                 Debug.Log("Boss tué!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 qs.ActivateQuest();
@@ -299,7 +299,7 @@ public class PlayerController : MonoBehaviour {
             else
             {
                 Debug.Log("Enemy normal tué");
-            }
+            }*/
             expAvantLvlUp = expBar.maxValue - expBar.value;
             expBar.value += eHp.getExpGagnable();
 
@@ -388,7 +388,8 @@ public class PlayerController : MonoBehaviour {
         }
         healthSlider.value = playerHealth.getCurrentHealth();
     }
-    
+
+
     public void BeginAttack()
     {
         foreach( var weapon in swordColliders)
