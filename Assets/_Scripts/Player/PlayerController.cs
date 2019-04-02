@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 
 
 public class PlayerController : MonoBehaviour {
+    [SerializeField] private float defaultSpeed = 6.0f;
     [SerializeField] private float moveSpeed = 10.0f;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private GameObject camera;
@@ -32,6 +33,7 @@ public class PlayerController : MonoBehaviour {
     private float tmpsAvtProchaineAtq1;
     private float tmpsAvtProchaineAtq2;
     private float tmpsAvtAutoAtck;
+    private float tmpsAvtFormeDeLoup;
 
     //private float expGagne = 0.40f;
 
@@ -280,6 +282,19 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public void vitesseDeLoup()
+    {
+        float cooldown = 10.0f;
+
+        if (tmpsAvtFormeDeLoup <= Time.time)
+        {
+            tmpsAvtFormeDeLoup = Time.time + cooldown;
+
+            StartCoroutine(speedBoost(1.5f, 4f));
+
+        }
+    }
+
     public void augmentationExp(EnemyHealth eHp)
     {
 
@@ -389,6 +404,22 @@ public class PlayerController : MonoBehaviour {
         healthSlider.value = playerHealth.getCurrentHealth();
     }
 
+    public IEnumerator speedBoost(float boost, float time)
+    {
+        float timer = 0f;
+        moveSpeed *= boost;
+        while (timer < time)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        if (timer >= time)
+        {
+            moveSpeed = defaultSpeed;
+            yield return null;
+        }
+    }
 
     public void BeginAttack()
     {

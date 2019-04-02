@@ -23,5 +23,8 @@ public class AttaqueScript : MonoBehaviour {
     {
         pc.spinAttaque();
     }
-
+    public void formeDeLoup()
+    {
+        pc.vitesseDeLoup();
+    }
 }
