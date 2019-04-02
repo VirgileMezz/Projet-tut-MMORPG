@@ -1,11 +1,25 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
 
 public class InventorySlot : MonoBehaviour
 {
     Item item;
+    private PlayerController pc;
     public Image icon;
     public Button removeButton;
+    Scene currentScene;
+    private Text textPotionVie;
+    [SerializeField] private int nbPotions = 3;
+
+    void Start()
+    {
+        pc = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        currentScene = SceneManager.GetActiveScene();
+        textPotionVie = GameObject.Find("nb").GetComponent<Text>();
+        textPotionVie.text = GetNbPotions().ToString();
+    }
 
     public void AddItem(Item newItem)
     {
@@ -34,5 +48,26 @@ public class InventorySlot : MonoBehaviour
         {
             item.Use();
         }
+        
+        Debug.Log(currentScene.buildIndex);
+        if (icon.sprite != null && icon.sprite.name == "potionVie" && currentScene.name != "MainGame(testing)" && nbPotions != 0 )
+        {
+            pc.healthBonus();
+            nbPotions--;
+            textPotionVie.text = nbPotions.ToString();
+        }
+        else if (currentScene.name == "MainGame(testing)" || nbPotions == 0)
+        {
+            if (nbPotions == 0)
+            {
+                textPotionVie.text = nbPotions.ToString();
+            }
+            Debug.Log("Tu peux pas te soigner fdp");
+        }
+    }
+    
+    public int GetNbPotions()
+    {
+        return nbPotions;
     }
 }
