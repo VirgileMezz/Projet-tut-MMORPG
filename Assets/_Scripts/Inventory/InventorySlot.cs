@@ -12,6 +12,7 @@ public class InventorySlot : MonoBehaviour
     Scene currentScene;
     private Text textPotionVie;
     [SerializeField] private int nbPotions = 3;
+    [SerializeField] private PlayerHealth ph;
 
     void Start()
     {
@@ -19,6 +20,7 @@ public class InventorySlot : MonoBehaviour
         currentScene = SceneManager.GetActiveScene();
         textPotionVie = GameObject.Find("nb").GetComponent<Text>();
         textPotionVie.text = GetNbPotions().ToString();
+        ph = pc.GetComponent<PlayerHealth>();
     }
 
     public void AddItem(Item newItem)
@@ -48,9 +50,8 @@ public class InventorySlot : MonoBehaviour
         {
             item.Use();
         }
-        
-        Debug.Log(currentScene.buildIndex);
-        if (icon.sprite != null && icon.sprite.name == "potionVie" && currentScene.name != "MainGame(testing)" && nbPotions != 0 )
+       
+        if (icon.sprite != null && icon.sprite.name == "potionVie" && currentScene.name != "MainGame(testing)" && nbPotions != 0 && ph.getCurrentHealth() < ph.getMaxVie())
         {
             pc.healthBonus();
             nbPotions--;
@@ -62,7 +63,7 @@ public class InventorySlot : MonoBehaviour
             {
                 textPotionVie.text = nbPotions.ToString();
             }
-            Debug.Log("Tu peux pas te soigner fdp");
+            Debug.Log("Tu peux pas te soigner");
         }
     }
     
