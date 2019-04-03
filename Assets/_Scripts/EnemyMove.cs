@@ -39,7 +39,7 @@ public class EnemyMove : MonoBehaviour {
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, detectionRange);
             for (int i = 0; i < hitColliders.Length; i++)
             {
-                Debug.Log(hitColliders[i].gameObject.tag == "Player");
+
                 if (hitColliders[i].gameObject.tag == "Player")
                 {
                     //Debug.Log(hit.collider.gameObject == player);
