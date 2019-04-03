@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour {
     private BoxCollider[] swordColliders;
 
     private SystemCiblage sc;
+    private QuestScript qs;
 
     private float tmpsAvtProchaineAtq1;
     private float tmpsAvtProchaineAtq2;
@@ -51,17 +52,17 @@ public class PlayerController : MonoBehaviour {
 
    
     private Text textGold;
+    private Text textQuest;
 
     private float expAvantLvlUp;
     private float expReste;
     private float currentExp;
     private float puissanceAttaque = 10;
     private Text charaLvlText;
+    private bool valueActivateQuest;
 
     private Camera camera1;
-    public Interactable focus;
-    //QuestScript qs = new QuestScript();
-    
+    public Interactable focus;    
     private void Awake()
     {
       DontDestroyOnLoad(gameObject);
@@ -80,6 +81,7 @@ public class PlayerController : MonoBehaviour {
         swordColliders = GetComponentsInChildren<BoxCollider>();
         expBar = GameObject.Find("ExpBar").GetComponent<Slider>();
         textGold = GameObject.Find("Gold").GetComponent<Text>();
+        
         textGold.text = "Gain : "+getMoney();
         barreAction = GameObject.Find("BarreAction");
         aS = barreAction.GetComponentsInChildren<AttaqueScript>();
@@ -87,7 +89,9 @@ public class PlayerController : MonoBehaviour {
         healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
         charaLvlText = GameObject.Find("CharaLevelText").GetComponent<Text>();
         camera1 = camera.GetComponent<Camera>() ;
-        
+        qs = new QuestScript(true, false);
+
+
 
     }
 
@@ -212,6 +216,7 @@ public class PlayerController : MonoBehaviour {
 
                         eHp.takeHit(1.5f);
                         augmentationExp(eHp);
+                        BossTue(eHp);
                         augmentationMoney(eHp);
                         anim.Play("DoubleAttack");
                         
@@ -244,6 +249,7 @@ public class PlayerController : MonoBehaviour {
                     eHp.takeHit(1f);
                     augmentationExp(eHp);
                     augmentationMoney(eHp);
+                    BossTue(eHp);
                     anim.Play("Hero_autoAttaque");
 
                 }
@@ -271,6 +277,7 @@ public class PlayerController : MonoBehaviour {
                     {
                         augmentationExp(eHp);
                         augmentationMoney(eHp);
+                        BossTue(eHp);
                         Debug.Log("adversaire tué avec aoe");
                     }
                     //augmentationExp();
@@ -471,7 +478,31 @@ public class PlayerController : MonoBehaviour {
 
 
     }
+    private void BossTue(EnemyHealth eHp)
+    {
+        if (!eHp.IsAlive())
+        {
+            if (eHp.Boss())
+            {
+                textQuest = GameObject.Find("QuestTextKillBoss").GetComponent<Text>();
+                Debug.Log("Boss tué!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                Debug.Log("Valeur de l'activation de la quete" + valueActivateQuest);
+                // Debug.Log("Valid: " + valueActivateQuest);
+                textQuest.text = "Completed You gain 10k po";
+                Debug.Log("ActiveQuest: " + qs.getActiveQuest() + " , ValidQuest" + qs.getValidateQuest());
+                // qs.setValidateQuest(true);
+                // Debug.Log("ValidQuest: " + qs.getActiveQuest() + " , ValidQuest" + qs.getValidateQuest());
+                //Quete activée -> argent débloqué !
+                moneyGain += qs.getMoneyFinQuete();
+                textGold.text = "Gain : " + moneyGain;
+            }
+            else
+            {
+                Debug.Log("Enemy normal tué");
+            }
+        }
 
+    }
     public float getPuissanceAttaque()
     {
         return puissanceAttaque;

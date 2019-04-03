@@ -19,25 +19,41 @@ public class DialogLauncher : MonoBehaviour
     public bool enableMultipleDialog;
     public int speedText;
 
+    public GameObject affichageQuete;
+    public bool activateQuest;
+    public static bool valActQuest;
+    private QuestScript qs;
+
     private Text text;
     private Dialog dialog;
     private bool isShowing;
     private bool isDisplay;
+    private bool estDejaPasse;
 
     private IEnumerator coroutine;
 
     // Start is called before the first frame update
     void Start()
     {
+        
         isShowing = false;
         isDisplay = false;
         pressTalkPanel.SetActive(false);
         dialogPanel.SetActive(false);
+        affichageQuete.SetActive(false);
+
         text = dialogText.GetComponent<Text>();
         text.text = "";
 
         string[] t = File.ReadAllLines(dialogFilePath, Encoding.UTF8);
         dialog = new Dialog(t);
+        qs = new QuestScript();
+        valActQuest = false;
+    }
+
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame
@@ -90,6 +106,17 @@ public class DialogLauncher : MonoBehaviour
                     dialogPanel.SetActive(false);
                     text.text = "";
                     dialog.Reset();
+                    if (activateQuest)
+                    {
+                        Debug.Log("Quete Acceptée!!!!!!!!!!!!!!!!!!!!!!!!!");
+                        qs.setActiveQuest(true);
+                        Debug.Log("AcceptQuest" + qs.getActiveQuest());
+                        Debug.Log("ValidQuest" + qs.getValidateQuest());
+                        valActQuest = qs.getActiveQuest();
+                        estDejaPasse = true;
+                        affichageQuete.SetActive(true);
+
+                    }
                     if (enableMultipleDialog)
                     {
                         pressTalkPanel.SetActive(true);
@@ -139,9 +166,23 @@ public class DialogLauncher : MonoBehaviour
         }
         else
         {
-            continueText.GetComponent<Text>().text = "Press E to leave";
+            if (activateQuest)
+            {
+                continueText.GetComponent<Text>().text = "Press E to Accept Quest !";
+
+
+            }
+            else
+            {
+                continueText.GetComponent<Text>().text = "Press E to leave !";
+            }
         }
 
         isDisplay = false;
+    }
+
+    public bool valueActivQuest()
+    {
+        return valActQuest;
     }
 }
