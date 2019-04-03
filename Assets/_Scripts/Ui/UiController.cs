@@ -25,11 +25,22 @@ public class UiController : MonoBehaviour {
     {
         o.SetActive(true);
     }
+
+    public void resurect()
+    {
+        player = transform.root.gameObject;
+        print(player);
+        PlayerHealth ph = player.GetComponent<PlayerHealth>();
+        print(ph);
+        SceneManager.LoadScene(1, LoadSceneMode.Single);
+        ph.resurectPlayer();
+
+    }
     public void PlayerInstanciate()
     {
-        if (HUD != null && player != null && Camera != null && GameController != null && GameManager != null)
+        if ( player != null && Camera != null && GameController != null && GameManager != null)//HUD != null &&
         {
-            Instantiate(HUD);
+            //Instantiate(HUD);
             Instantiate(player);
             Instantiate(Camera);
             Instantiate(GameController);

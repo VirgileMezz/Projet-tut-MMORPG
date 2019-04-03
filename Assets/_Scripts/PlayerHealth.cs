@@ -16,12 +16,15 @@ public class PlayerHealth : MonoBehaviour {
     private int currentHealth,healthMax;
     private ParticleSystem blood;
     //private AudioSource audio;
+    private GameObject resPanel;
 
 
     void Awake()
     {
+        resPanel = GameObject.Find("DeathPanel");
         healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
         Assert.IsNotNull(healthSlider);
+        resPanel.SetActive(false);
     }
 
     // Use this for initialization
@@ -69,6 +72,7 @@ public class PlayerHealth : MonoBehaviour {
         if(currentHealth <= 0)
         {
             killPlayer();
+
         }
     }
 
@@ -79,6 +83,16 @@ public class PlayerHealth : MonoBehaviour {
         characterController.enabled = false;
         //audio.PlayOneShot(audio.clip);
         blood.Play();
+        resPanel.SetActive(true);
+
+    }
+    public void resurectPlayer()
+    {
+        resPanel.SetActive(false);
+        currentHealth = healthMax;
+        healthSlider.value = currentHealth;
+        characterController.enabled = true;
+
     }
 
     public int getCurrentHealth()

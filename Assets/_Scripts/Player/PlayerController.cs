@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour {
         {
             //fin test
             //transform.rotation = Quaternion.LookRotation(moveDirection);
-            move = vertical * playerFwd + horizontal * cam.right;
+            move = (vertical * playerFwd) + (horizontal * cam.right);
             //move = vertical * camForward + horizontal * cam.right;
             characterController.SimpleMove(move * moveSpeed);
             
